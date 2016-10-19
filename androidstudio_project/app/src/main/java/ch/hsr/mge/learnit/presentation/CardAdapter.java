@@ -1,5 +1,6 @@
 package ch.hsr.mge.learnit.presentation;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,40 +11,46 @@ import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+public class CardAdapter extends
+        RecyclerView.Adapter<CardAdapter.ViewHolder> {
+
     private CardSet set = null;
-    private CardSelectionListener selectionListener;
+    private Context mContext;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView front;
-        public TextView back;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public TextView frontText;
+        public TextView backText;
+        private Context context;
 
-        public ViewHolder(View itemRoot, TextView front, TextView back) {
+        public ViewHolder(Context context, View itemRoot, TextView frontText, TextView backText) {
             super(itemRoot);
-            this.front = front;
-            this.back = back;
+            this.frontText = frontText;
+            this.backText = backText;
+            this.context = context;
         }
+
     }
 
-    public CardAdapter(CardSet set, CardSelectionListener selectionListener) {
+    public CardAdapter(Context context, CardSet set) {
+        this.mContext = context;
         this.set = set;
-        this.selectionListener = selectionListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        Context context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View v = layoutInflater.inflate(R.layout.card_layout, parent, false);
-        TextView front = (TextView) v.findViewById(R.id.frontText);
-        TextView back = (TextView) v.findViewById(R.id.backText);
-        return new ViewHolder(v, front, back);
+        TextView frontText = (TextView) v.findViewById(R.id.frontText);
+        TextView backText = (TextView) v.findViewById(R.id.backText);
+        return new ViewHolder(context,v, frontText, backText);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Card card = set.get(position);
-        holder.front.setText(card.getFront());
-        holder.back.setText(card.getBack());
+        holder.frontText.setText(card.getFront());
+        holder.backText.setText(card.getBack());
     }
 
     @Override
@@ -51,4 +58,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         return set.getSize();
     }
 
+    private Context getContext() {
+        return mContext;
+    }
 }

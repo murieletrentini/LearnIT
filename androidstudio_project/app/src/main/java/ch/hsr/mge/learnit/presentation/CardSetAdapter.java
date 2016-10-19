@@ -1,5 +1,7 @@
 package ch.hsr.mge.learnit.presentation;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,42 +12,60 @@ import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
-public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.ViewHolder> {
+public class CardSetAdapter extends
+        RecyclerView.Adapter<CardSetAdapter.ViewHolder> {
+
     private CardSets sets = null;
-    private CardSetSelectionListener selectionListener;
+    private Context mContext;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView textView;
+        public TextView amountOfCards;
+        private Context context;
 
-        public ViewHolder(View itemRoot, TextView textView) {
+        public ViewHolder(Context context, View itemRoot, TextView textView, TextView amountOfCards) {
             super(itemRoot);
             this.textView = textView;
+            this.amountOfCards = amountOfCards;
+            this.context = context;
+
+            textView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition(); // gets item position
+            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
+                CardSet set = sets.get(position);
+                // We can access the data within the views
+                Intent intent = new Intent(context, CardSetDetailActivity.class);
+                intent.putExtra("CARDSET_POSITION", position);
+                context.startActivity(intent);
+            }
         }
     }
 
-    public CardSetAdapter(CardSets sets, CardSetSelectionListener selectionListener) {
+    public CardSetAdapter(Context context, CardSets sets) {
+        this.mContext = context;
         this.sets = sets;
-        this.selectionListener = selectionListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        Context context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View v = layoutInflater.inflate(R.layout.card_set_layout, parent, false);
         TextView textView = (TextView) v.findViewById(R.id.textView);
-        return new ViewHolder(v, textView);
+        TextView amountOfCards = (TextView) v.findViewById(R.id.cardAmount);
+        return new ViewHolder(context,v, textView, amountOfCards);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final CardSet set = sets.get(position);
         holder.textView.setText(set.getTitle());
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectionListener.onItemSelected(position);
-            }
-        });
+        String card;
+        card = set.getSize() == 1 ? "card":"cards";
+        holder.amountOfCards.setText("( "+ set.getSize() + " " + card + " )");
     }
 
     @Override
@@ -53,4 +73,7 @@ public class CardSetAdapter extends RecyclerView.Adapter<CardSetAdapter.ViewHold
         return sets.getSize();
     }
 
+    private Context getContext() {
+        return mContext;
+    }
 }
