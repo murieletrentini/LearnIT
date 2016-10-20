@@ -8,9 +8,7 @@ public class CardSets {
     private List<CardSet> sets = new ArrayList<>();
 
     public CardSets(){
-        CardSet one = new CardSet("Englisch Voci");
-        one.addCard(new Card("testfront", "testback"));
-        sets.add(one);
+
     }
 
     public CardSet get(int position) {
@@ -28,6 +26,10 @@ public class CardSets {
             }
         }
         return -1;
+    }
+
+    public boolean isEmpty() {
+        return sets.size() == 0;
     }
 
     public int getSize() {

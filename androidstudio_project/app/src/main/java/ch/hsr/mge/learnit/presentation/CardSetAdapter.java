@@ -18,7 +18,7 @@ public class CardSetAdapter extends
     private CardSets sets = null;
     private Context mContext;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textView;
         public TextView amountOfCards;
         private Context context;
@@ -31,6 +31,7 @@ public class CardSetAdapter extends
 
             textView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
@@ -56,21 +57,33 @@ public class CardSetAdapter extends
         View v = layoutInflater.inflate(R.layout.card_set_layout, parent, false);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView amountOfCards = (TextView) v.findViewById(R.id.cardAmount);
-        return new ViewHolder(context,v, textView, amountOfCards);
+        return new ViewHolder(context, v, textView, amountOfCards);
     }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final CardSet set = sets.get(position);
-        holder.textView.setText(set.getTitle());
-        String card;
-        card = set.getSize() == 1 ? "card":"cards";
-        holder.amountOfCards.setText("( "+ set.getSize() + " " + card + " )");
+        if (!sets.isEmpty()) {
+            final CardSet set = sets.get(position);
+            holder.textView.setText(set.getTitle());
+            String card;
+            card = set.getSize() == 1 ? "card":"cards";
+            holder.amountOfCards.setText("( "+ set.getSize() + " " + card + " )");
+        }
+        else {
+            String emptyString = "Click on the Plus to add a Set!";
+            holder.textView.setText(emptyString);
+            holder.amountOfCards.setText("");
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return sets.getSize();
+        if (!sets.isEmpty())
+            return sets.getSize();
+        else
+            return 1;
     }
 
     private Context getContext() {
