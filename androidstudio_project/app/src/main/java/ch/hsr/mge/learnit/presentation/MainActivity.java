@@ -1,5 +1,6 @@
 package ch.hsr.mge.learnit.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
+import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,8 +42,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                    CardSet set =  new CardSet();
+                    sets.addCardSet(set);
+                    // We can access the data within the views
+                    Intent intent = new Intent(MainActivity.this, CardSetDetailActivity.class);
+                    startActivity(intent);
             }
         });
     }

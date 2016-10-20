@@ -17,6 +17,10 @@ public class CardSets {
         return sets.get(position);
     }
 
+    public void addCardSet(CardSet set) {
+        sets.add(set);
+    }
+
     public int getPosition(CardSet set) {
         for (int i = 0; i < sets.size(); i++) {
             if (set.equals(sets.get(i))) {

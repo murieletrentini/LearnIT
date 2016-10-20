@@ -13,6 +13,8 @@ public class CardSet {
         this.title = title;
     }
 
+    public CardSet() { title = "placeholder"; }
+
     public Card get(int position) {
         return cardSet.get(position);
     }

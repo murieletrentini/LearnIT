@@ -1,6 +1,7 @@
 package ch.hsr.mge.learnit;
 
 
+import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
 public class Application extends android.app.Application {
@@ -8,5 +9,9 @@ public class Application extends android.app.Application {
 
     public CardSets getCardSets() {
         return sets;
+    }
+
+    public void addSet(CardSet set) {
+        sets.addCardSet(set);
     }
 }
