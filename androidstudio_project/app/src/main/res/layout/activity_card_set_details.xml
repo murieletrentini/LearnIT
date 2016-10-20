@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/linear_layout"
+    android:id="@+id/cardSetDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_horizontal_margin"
     android:paddingEnd="@dimen/activity_horizontal_margin"
     android:paddingLeft="@dimen/activity_vertical_margin"
@@ -11,19 +10,17 @@
     app:layout_scrollFlags="scroll">
 
     <LinearLayout
-        android:id="@+id/content"
+        android:id="@+id/actionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-
         <ImageButton
-            android:id="@+id/playButton"
+            android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_play_arrow_black_18dp" />
+            app:srcCompat="@drawable/ic_add_circle_black_18dp" />
 
         <ImageButton
             android:id="@+id/editButton"
@@ -44,11 +41,27 @@
         android:id="@+id/titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/actionBar"
         android:text="Title"
         android:textSize="30sp" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/titleText"
         android:id="@+id/cardView" />
-</LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_gravity="bottom|end"
+    android:layout_marginBottom="@dimen/fab_margin"
+    android:layout_marginEnd="@dimen/fab_margin"
+    android:layout_marginLeft="@dimen/fab_margin"
+    android:layout_marginRight="@dimen/fab_margin"
+    app:srcCompat="@drawable/ic_play_arrow_black_48dp" />
+
+</RelativeLayout>

@@ -1,9 +1,12 @@
 package ch.hsr.mge.learnit.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.Application;
@@ -14,6 +17,7 @@ import ch.hsr.mge.learnit.domain.CardSets;
 public class CardSetDetailActivity extends AppCompatActivity {
     private CardSets sets;
     private CardSet set;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,21 +25,29 @@ public class CardSetDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_set_details);
         TextView title = (TextView) findViewById(R.id.titleText);
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            int position = extras.getInt("CARDSET_POSITION");
-            Application app = (Application) getApplication();
-            sets = app.getCardSets();
-            set = sets.get(position);
-            title.setText(set.getTitle());
 
-            RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
+        index = extras.getInt("CARDSET_POSITION");
+        Application app = (Application) getApplication();
+        sets = app.getCardSets();
+        set = sets.get(index);
+        title.setText(set.getTitle());
 
-            CardAdapter adapter = new CardAdapter(this, set);
-            // Attach the adapter to the recyclerview to populate items
-            recyclerViewCardSets.setAdapter(adapter);
-            // Set layout manager to position the items
-            recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
-        }
+        RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
 
+        CardAdapter adapter = new CardAdapter(this, set);
+        recyclerViewCardSets.setAdapter(adapter);
+        recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CardSetDetailActivity.this, PlayMode.class);
+                intent.putExtra("CARDSET_POSITION", index);
+                startActivity(intent);
+            }
+        });
     }
 }
+
