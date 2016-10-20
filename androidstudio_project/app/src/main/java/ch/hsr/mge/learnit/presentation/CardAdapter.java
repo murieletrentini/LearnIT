@@ -55,7 +55,10 @@ public class CardAdapter extends
 
     @Override
     public int getItemCount() {
-        return set.getSize();
+        if (set != null)
+            return set.getSize();
+        else
+            return 0;
     }
 
     private Context getContext() {

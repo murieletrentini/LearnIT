@@ -43,4 +43,6 @@ public class CardSet {
     public int getSize() {
         return cardSet.size();
     }
+
+    public boolean isEmpty() { return cardSet.size() == 0; }
 }

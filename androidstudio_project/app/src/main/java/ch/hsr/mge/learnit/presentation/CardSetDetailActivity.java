@@ -25,12 +25,13 @@ public class CardSetDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_set_details);
         TextView title = (TextView) findViewById(R.id.titleText);
         Bundle extras = getIntent().getExtras();
-
-        index = extras.getInt("CARDSET_POSITION");
         Application app = (Application) getApplication();
         sets = app.getCardSets();
-        set = sets.get(index);
-        title.setText(set.getTitle());
+        if (!sets.isEmpty() && extras != null) {
+            index = extras.getInt("CARDSET_POSITION");
+            set = sets.get(index);
+            title.setText(set.getTitle());
+        }
 
         RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
 
