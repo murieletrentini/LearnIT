@@ -6,25 +6,29 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static ch.hsr.mge.learnit.database.DBHelper.DATABASE_NAME;
+
 /**
  * Created by nico on 21/10/16.
  */
 
-public class CardSetHelper extends DBHelper {
+public class CardHelper extends DBHelper{
 
-    private static final int DATABASE_VERSION = 1;
+    public static final String CARD_TABLE_NAME = "card";
+    public static final String CARD_COLUMN_ID = "cardid";
+    public static final String CARD_COLUMN_FRONT = "front";
+    public static final String CARD_COLUMN_BACK = "back";
+    public static final String CARD_COLUMN_CARDSETID = "cardset";
 
-    public static final String CARDSET_TABLE_NAME = "cardset";
-    public static final String CARDSET_COLUMN_ID = "cardsetid";
-    public static final String CARDSET_COLUMN_NAME = "cardsetname";
 
 
-    public CardSetHelper(Context context) {
+    public CardHelper(Context context) {
         super(context);
     }
     //TODO: write create table query
     public void onCreate(SQLiteDatabase db) {
         super.onCreate(db);
+
     }
 
 

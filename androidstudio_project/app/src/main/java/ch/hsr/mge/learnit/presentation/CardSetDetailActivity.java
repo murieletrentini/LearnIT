@@ -1,6 +1,7 @@
 package ch.hsr.mge.learnit.presentation;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
+import ch.hsr.mge.learnit.database.CardSetHelper;
+import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
@@ -18,6 +21,7 @@ public class CardSetDetailActivity extends AppCompatActivity {
     private CardSets sets;
     private CardSet set;
     int index;
+    private DBHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
