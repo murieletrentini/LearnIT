@@ -8,7 +8,10 @@ public class CardSets {
     private List<CardSet> sets = new ArrayList<>();
 
     public CardSets(){
-
+        CardSet set = (new CardSet("Test"));
+        Card card = new Card("testfront", "testback");
+        set.addCard(card);
+        sets.add(set);
     }
 
     public CardSet get(int position) {
