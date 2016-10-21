@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.CardSetDetailActivity" />
-        <activity android:name=".presentation.PlayMode"></activity>
+        <activity android:name=".presentation.PlayMode" />
+        <activity android:name=".presentation.WellDoneActivity"></activity>
     </application>
 
 </manifest>

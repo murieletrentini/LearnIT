@@ -45,4 +45,14 @@ public class CardSet {
     }
 
     public boolean isEmpty() { return cardSet.size() == 0; }
+
+    public int amountCorrectCards(){
+        int correct = 0;
+        for (Card card : cardSet){
+            if (card.isCorrect()){
+                correct++;
+            }
+        }
+        return correct;
+    }
 }

@@ -1,5 +1,6 @@
 package ch.hsr.mge.learnit.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +18,7 @@ public class PlayMode extends AppCompatActivity {
     private int counter = 0;
     private TextView front;
     private TextView back;
+    private int index;
 
 
     @Override
@@ -24,8 +26,7 @@ public class PlayMode extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_mode);
         Bundle extras = getIntent().getExtras();
-
-        int index = extras.getInt("CARDSET_POSITION");
+        index = extras.getInt("CARDSET_POSITION");
         Application app = (Application) getApplication();
         set = app.getCardSets().get(index);
 
@@ -60,7 +61,9 @@ public class PlayMode extends AppCompatActivity {
     }
 
     private void finished() {
-        front.setText("You are done");
+        Intent intent = new Intent(this, WellDoneActivity.class);
+        intent.putExtra("CARDSET_POSITION", index);
+        startActivity(intent);
     }
 
     private void refreshCardText() {
