@@ -14,6 +14,7 @@ public class CardSet {
 
     public CardSet(String title) {
         this.title = title;
+
     }
 
     public CardSet() { title = "placeholder"; }

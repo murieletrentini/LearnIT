@@ -2,6 +2,7 @@ package ch.hsr.mge.learnit.presentation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.R;
+import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
@@ -17,6 +19,7 @@ public class CardSetAdapter extends
 
     private CardSets sets = null;
     private Context mContext;
+    private DBHelper helper;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textView;
@@ -44,19 +47,22 @@ public class CardSetAdapter extends
             }
         }
     }
-
+    //insert into db here?
     public CardSetAdapter(Context context, CardSets sets) {
         this.mContext = context;
         this.sets = sets;
     }
 
     @Override
+    //insert into db here?
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View v = layoutInflater.inflate(R.layout.card_set_layout, parent, false);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView amountOfCards = (TextView) v.findViewById(R.id.cardAmount);
+        String setName = textView.getText().toString();
+
         return new ViewHolder(context, v, textView, amountOfCards);
     }
 
@@ -67,8 +73,8 @@ public class CardSetAdapter extends
             final CardSet set = sets.get(position);
             holder.textView.setText(set.getTitle());
             String card;
-            card = set.getSize() == 1 ? "card":"cards";
-            holder.amountOfCards.setText("( "+ set.getSize() + " " + card + " )");
+            card = set.getSize() == 1 ? "card" : "cards";
+            holder.amountOfCards.setText("( " + set.getSize() + " " + card + " )");
         }
         else {
             String emptyString = "Click on the Plus to add a Set!";

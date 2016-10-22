@@ -6,6 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.hsr.mge.learnit.domain.Card;
+import ch.hsr.mge.learnit.domain.CardSet;
+
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_BACK;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_CARDSETID;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_FRONT;
@@ -58,15 +64,33 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getCardSet(String name) {
+    public List<Card> getCardSet(String name) {
+        List<Card> cardSet = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery( "SELECT * FROM " + CARDSET_TABLE_NAME + " WHERE " +
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + CARDSET_TABLE_NAME + " WHERE " +
                 CARDSET_COLUMN_NAME + "=?", new String[] { name });
-    }
+        while (cursor.moveToFirst()) {
+                Card card = new Card();
+                card.setFront(cursor.getString(1));
+                card.setBack(cursor.getString(2));
+                cardSet.add(card);
+            }
+        cursor.close();
+            return cardSet;
+        }
 
-    public Cursor getAllCardSets() {
+
+    public List<CardSet> getAllCardSets() {
+        List<CardSet> cardSets = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery( "SELECT " + CARDSET_COLUMN_NAME + " FROM " + CARDSET_TABLE_NAME, null);
+        Cursor cursor = db.rawQuery( "SELECT " + CARDSET_COLUMN_NAME + " FROM " + CARDSET_TABLE_NAME, null);
+        while (cursor.moveToFirst()) {
+            CardSet cardSet = new CardSet();
+            cardSet.setTitle(cursor.getString(1));
+            cardSets.add(cardSet);
+        }
+        cursor.close();
+        return cardSets;
     }
 
     public void deleteCardSet(String name) {

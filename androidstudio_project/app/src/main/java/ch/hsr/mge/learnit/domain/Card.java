@@ -11,6 +11,12 @@ public class Card {
         isCorrect = false;
     }
 
+    public Card() {
+        this.front = "";
+        this.back = "";
+        isCorrect = false;
+    }
+
     public String getFront() {
         return front;
     }

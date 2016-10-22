@@ -23,7 +23,7 @@ import ch.hsr.mge.learnit.domain.CardSets;
 
 public class MainActivity extends AppCompatActivity {
     private CardSets sets;
-    private DBHelper helper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +54,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
             }
         });
-
-        //start of db-implementation
-        helper = new DBHelper(this);
-        final Cursor cursor = helper.getAllCardSets();
-        String[] names = new String[] {
-                CardSetHelper.CARDSET_COLUMN_NAME,
-                CardSetHelper.CARDSET_COLUMN_ID};
-        int[] widgets = new int[] {
-                R.id.textView,
-                0};
-
-        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.card_set_layout, cursor, names, widgets, 0);
-        recyclerViewCardSets.setAdapter(cursorAdapter);
-        }
     }
 
 
