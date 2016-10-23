@@ -34,6 +34,7 @@ public class AddCardActivity extends AppCompatActivity {
                 EditText back = (EditText) findViewById(R.id.backSideText);
                 set.addCard(new Card(front.getText().toString(), back.getText().toString()));
                 Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
+                intent.putExtra("CARDSET_POSITION", index);
                 startActivity(intent);
             }
         });
@@ -42,6 +43,7 @@ public class AddCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
+                intent.putExtra("CARDSET_POSITION", index);
                 startActivity(intent);
             }
         });
