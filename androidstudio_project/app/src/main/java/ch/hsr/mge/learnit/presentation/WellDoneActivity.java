@@ -21,7 +21,7 @@ public class WellDoneActivity extends AppCompatActivity {
         index = extras.getInt("CARDSET_POSITION");
         Application app = (Application) getApplication();
         set = app.getCardSets().get(index);
-
-        statistik.setText("You now have " + set.amountCorrectCards() + " of "+ set.getSize() +" correct Cards");
+        String cardString = set.getSize() == 1? "card":"cards";
+        statistik.setText("You now have " + set.amountCorrectCards() + " of "+ set.getSize() +" correct " + cardString);
     }
 }

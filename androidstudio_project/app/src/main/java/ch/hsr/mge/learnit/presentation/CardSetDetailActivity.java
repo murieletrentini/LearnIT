@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.Application;
@@ -49,6 +50,16 @@ public class CardSetDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CardSetDetailActivity.this, PlayMode.class);
+                intent.putExtra("CARDSET_POSITION", index);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton addButton = (ImageButton) findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(CardSetDetailActivity.this, AddCardActivity.class);
                 intent.putExtra("CARDSET_POSITION", index);
                 startActivity(intent);
             }

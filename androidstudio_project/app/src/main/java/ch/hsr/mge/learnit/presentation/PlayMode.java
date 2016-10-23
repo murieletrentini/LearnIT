@@ -54,11 +54,17 @@ public class PlayMode extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 currCard.setCorrect(false);
-                currCard = set.get(++counter);
-                refreshCardText();
-            }
-        });
+                if (counter == set.getSize() - 1) {
+                    finished();
+                } else {
+                    currCard = set.get(++counter);
+                    refreshCardText();
+                }
+        }
     }
+
+    );
+}
 
     private void finished() {
         Intent intent = new Intent(this, WellDoneActivity.class);

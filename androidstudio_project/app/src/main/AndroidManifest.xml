@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".presentation.CardSetDetailActivity" />
         <activity android:name=".presentation.PlayMode" />
-        <activity android:name=".presentation.WellDoneActivity"></activity>
+        <activity android:name=".presentation.WellDoneActivity" />
+        <activity android:name=".presentation.AddCardActivity"></activity>
     </application>
 
 </manifest>
