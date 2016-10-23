@@ -22,6 +22,8 @@ public class CardSets {
         sets.add(set);
     }
 
+    public void removeCardSet(int position) {sets.remove(position);}
+
     public int getPosition(CardSet set) {
         for (int i = 0; i < sets.size(); i++) {
             if (set.equals(sets.get(i))) {

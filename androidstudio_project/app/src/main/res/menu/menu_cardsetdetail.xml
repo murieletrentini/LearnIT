@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_addCard"
+        android:icon="@drawable/ic_add_white_48dp"
+        android:title="add Card"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_removeSet"
+        android:icon="@drawable/ic_delete_forever_white_48dp"
+        android:title="remove Set"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>

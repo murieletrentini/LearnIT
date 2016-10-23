@@ -2,6 +2,7 @@ package ch.hsr.mge.learnit.presentation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.Application;
@@ -16,6 +17,10 @@ public class WellDoneActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_well_done);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        
         TextView statistik = (TextView) findViewById(R.id.statistik);
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("CARDSET_POSITION");

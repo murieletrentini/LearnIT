@@ -3,6 +3,7 @@ package ch.hsr.mge.learnit.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,6 +21,10 @@ public class AddCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_card);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         ImageButton saveButton = (ImageButton) findViewById(R.id.checkButton);
         ImageButton cancleButton = (ImageButton) findViewById(R.id.cancleButton);
         Application app = (Application) getApplication();

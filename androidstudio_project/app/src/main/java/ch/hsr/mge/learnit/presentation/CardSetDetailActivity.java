@@ -6,8 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.Application;
@@ -26,6 +28,11 @@ public class CardSetDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_set_details);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
         TextView title = (TextView) findViewById(R.id.titleText);
         Bundle extras = getIntent().getExtras();
         Application app = (Application) getApplication();
@@ -52,16 +59,38 @@ public class CardSetDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-        ImageButton addButton = (ImageButton) findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(CardSetDetailActivity.this, AddCardActivity.class);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_cardsetdetail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
+            case R.id.action_addCard:
+                intent = new Intent(CardSetDetailActivity.this, AddCardActivity.class);
                 intent.putExtra("CARDSET_POSITION", index);
                 startActivity(intent);
-            }
-        });
+                return true;
+            case R.id.action_removeSet:
+                sets.removeCardSet(index);
+                intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
 
