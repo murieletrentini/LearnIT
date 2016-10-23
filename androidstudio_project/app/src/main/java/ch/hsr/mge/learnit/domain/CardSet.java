@@ -4,9 +4,6 @@ package ch.hsr.mge.learnit.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.hsr.mge.learnit.database.CardSetHelper;
-import ch.hsr.mge.learnit.database.DBHelper;
-
 public class CardSet {
 
     private List<Card> cardSet = new ArrayList<>();
@@ -32,8 +29,9 @@ public class CardSet {
     }
 
     public void addCard(Card card){
-        cardSet.add(card);
-
+        if (!cardSet.contains(card)){
+            cardSet.add(card);
+        }
     }
 
     public int getPosition(Card card) {

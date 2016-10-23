@@ -45,7 +45,7 @@ public class CardSetDetailActivity extends AppCompatActivity {
 
         RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
 
-        CardAdapter adapter = new CardAdapter(this, set);
+        CardAdapter adapter = new CardAdapter(this, set, index);
         recyclerViewCardSets.setAdapter(adapter);
         recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
 

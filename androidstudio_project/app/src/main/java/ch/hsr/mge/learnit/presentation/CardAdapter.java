@@ -1,6 +1,7 @@
 package ch.hsr.mge.learnit.presentation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,10 @@ public class CardAdapter extends
         RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     private CardSet set = null;
+    private int index;
     private Context mContext;
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView frontText;
         public TextView backText;
         private Context context;
@@ -27,13 +29,28 @@ public class CardAdapter extends
             this.frontText = frontText;
             this.backText = backText;
             this.context = context;
-        }
 
+            frontText.setOnClickListener(this);
+            backText.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition(); // gets item position
+            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
+                Card card = set.get(position);
+                // We can access the data within the views
+                Intent intent = new Intent(context, AddCardActivity.class);
+                intent.putExtra("CARDSET_POSITION", index);
+                intent.putExtra("CARD_POSITION", position);
+                context.startActivity(intent);
+            }
+        }
     }
 
-    public CardAdapter(Context context, CardSet set) {
+    public CardAdapter(Context context, CardSet set, int index) {
         this.mContext = context;
         this.set = set;
+        this.index = index;
     }
 
     @Override

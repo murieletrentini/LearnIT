@@ -16,7 +16,11 @@ import ch.hsr.mge.learnit.domain.CardSet;
 public class AddCardActivity extends AppCompatActivity {
     private int index;
     private CardSet set;
-    
+    private EditText front;
+    private EditText back;
+    private Card card;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +36,24 @@ public class AddCardActivity extends AppCompatActivity {
         index = extras.getInt("CARDSET_POSITION");
         set = app.getCardSets().get(index);
 
-        saveButton.setOnClickListener(new View.OnClickListener(){
+        front = (EditText) findViewById(R.id.frontSideText);
+        back = (EditText) findViewById(R.id.backSideText);
+
+        if (getIntent().hasExtra("CARD_POSITION")) {
+            //card already exists -> edit mode
+            card = set.get(extras.getInt("CARD_POSITION"));
+            front.setText(card.getFront());
+            back.setText(card.getBack());
+        } else {
+            card = new Card();
+        }
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText front = (EditText) findViewById(R.id.frontSideText);
-                EditText back = (EditText) findViewById(R.id.backSideText);
-                set.addCard(new Card(front.getText().toString(), back.getText().toString()));
+                card.setFront(front.getText().toString());
+                card.setBack(back.getText().toString());
+                set.addCard(card);
                 Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
                 intent.putExtra("CARDSET_POSITION", index);
                 startActivity(intent);

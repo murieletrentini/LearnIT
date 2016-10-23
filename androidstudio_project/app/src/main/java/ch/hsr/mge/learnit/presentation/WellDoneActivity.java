@@ -20,7 +20,7 @@ public class WellDoneActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
         TextView statistik = (TextView) findViewById(R.id.statistik);
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("CARDSET_POSITION");
