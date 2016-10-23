@@ -2,6 +2,7 @@ package ch.hsr.mge.learnit.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,15 +12,20 @@ import android.widget.EditText;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
+import ch.hsr.mge.learnit.dialogs.YesNoDialog;
+import ch.hsr.mge.learnit.dialogs.YesNoDialog.DialogListener;
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 
-public class AddCardActivity extends AppCompatActivity {
+public class AddCardActivity extends AppCompatActivity implements DialogListener {
     private int index;
     private CardSet set;
     private EditText front;
+    private String frontString;
+    private String backString;
     private EditText back;
     private Card card;
+    private Intent intent;
 
 
     @Override
@@ -51,6 +57,7 @@ public class AddCardActivity extends AppCompatActivity {
             card = new Card();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -60,22 +67,42 @@ public class AddCardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
             case R.id.action_save:
-                card.setFront(front.getText().toString());
-                card.setBack(back.getText().toString());
-                set.addCard(card);
-                intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
-                intent.putExtra("CARDSET_POSITION", index);
-                startActivity(intent);
+                frontString = front.getText().toString();
+                backString = back.getText().toString();
+                if(frontString.isEmpty() || backString.isEmpty()) {
+                    DialogFragment alert = new YesNoDialog();
+                    Bundle args = new Bundle();
+                    args.putString("MESSAGE", "Your card has unfilled sides.");
+                    alert.setArguments(args);
+                    alert.show(getSupportFragmentManager(), "Alert");
+                } else {
+                    saveAndBackToParentActivity();
+                }
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void saveAndBackToParentActivity(){
+        card.setFront(frontString);
+        card.setBack(backString);
+        set.addCard(card);
+        intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
+        intent.putExtra("CARDSET_POSITION", index);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onFinishDialog(int resultCode) {
+        if (resultCode == RESULT_OK){
+            saveAndBackToParentActivity();
         }
     }
 }

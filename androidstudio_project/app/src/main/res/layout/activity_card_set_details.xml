@@ -21,7 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:text="Title"
-        android:textSize="30sp" />
+        android:padding="16dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardView"

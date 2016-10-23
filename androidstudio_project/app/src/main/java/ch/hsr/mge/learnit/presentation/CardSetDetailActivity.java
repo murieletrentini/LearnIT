@@ -3,6 +3,7 @@ package ch.hsr.mge.learnit.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,13 +16,16 @@ import android.widget.TextView;
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.database.DBHelper;
+import ch.hsr.mge.learnit.dialogs.YesNoDialog;
+import ch.hsr.mge.learnit.dialogs.YesNoDialog.DialogListener;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
-public class CardSetDetailActivity extends AppCompatActivity {
+public class CardSetDetailActivity extends AppCompatActivity implements DialogListener {
     private CardSets sets;
     private CardSet set;
-    int index;
+    private int index;
+    private Intent intent;
     private DBHelper helper;
 
     @Override
@@ -70,7 +74,6 @@ public class CardSetDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
@@ -82,14 +85,25 @@ public class CardSetDetailActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_removeSet:
-                sets.removeCardSet(index);
-                intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
-                startActivity(intent);
+                DialogFragment alert = new YesNoDialog();
+                Bundle args = new Bundle();
+                args.putString("MESSAGE", "This set will be deleted.");
+                alert.setArguments(args);
+                alert.show(getSupportFragmentManager(), "Alert");
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onFinishDialog(int resultCode) {
+        if (resultCode == RESULT_OK){
+            sets.removeCardSet(index);
+            intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 }
