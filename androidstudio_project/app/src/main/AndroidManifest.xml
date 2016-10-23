@@ -19,10 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.CardSetDetailActivity" />
+        <activity android:name=".presentation.CardSetDetailActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".presentation.PlayMode" />
-        <activity android:name=".presentation.WellDoneActivity" />
-        <activity android:name=".presentation.AddCardActivity"></activity>
+        <activity
+            android:name=".presentation.WellDoneActivity"
+            android:parentActivityName=".presentation.CardSetDetailActivity" />
+        <activity android:name=".presentation.AddCardActivity"
+            android:parentActivityName=".presentation.CardSetDetailActivity"></activity>
     </application>
 
 </manifest>

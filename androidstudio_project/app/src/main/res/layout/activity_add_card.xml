@@ -24,7 +24,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="51dp"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="64dp"
+        android:padding="16dp">
 
         <EditText
             android:id="@+id/frontSideText"
@@ -39,7 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/frontSide"
-        android:elevation="0dp">
+        android:elevation="0dp"
+        android:padding="16dp">
 
         <EditText
             android:id="@+id/backSideText"
@@ -48,21 +50,5 @@
             android:hint="Backside of Card" />
     </android.support.design.widget.TextInputLayout>
 
-    <ImageButton
-        android:id="@+id/cancleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/checkButton"
-        android:layout_marginStart="42dp"
-        app:srcCompat="@drawable/ic_cancel_black_36dp" />
 
-    <ImageButton
-        android:id="@+id/checkButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/frontSide"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="103dp"
-        app:srcCompat="@drawable/ic_check_black_36dp" />
 </RelativeLayout>

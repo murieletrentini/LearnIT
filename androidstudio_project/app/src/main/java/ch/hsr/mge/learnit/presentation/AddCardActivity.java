@@ -2,11 +2,12 @@ package ch.hsr.mge.learnit.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
@@ -29,8 +30,10 @@ public class AddCardActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ImageButton saveButton = (ImageButton) findViewById(R.id.checkButton);
-        ImageButton cancleButton = (ImageButton) findViewById(R.id.cancleButton);
+        ActionBar ab = getSupportActionBar();
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+
         Application app = (Application) getApplication();
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("CARDSET_POSITION");
@@ -47,27 +50,32 @@ public class AddCardActivity extends AppCompatActivity {
         } else {
             card = new Card();
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_addcard, menu);
+        return true;
+    }
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+            case R.id.action_save:
                 card.setFront(front.getText().toString());
                 card.setBack(back.getText().toString());
                 set.addCard(card);
-                Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
+                intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
                 intent.putExtra("CARDSET_POSITION", index);
                 startActivity(intent);
-            }
-        });
-
-        cancleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
-                intent.putExtra("CARDSET_POSITION", index);
-                startActivity(intent);
-            }
-        });
-
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
