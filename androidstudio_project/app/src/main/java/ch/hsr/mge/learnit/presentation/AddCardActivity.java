@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
+import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.dialogs.YesNoDialog;
 import ch.hsr.mge.learnit.dialogs.YesNoDialog.DialogListener;
 import ch.hsr.mge.learnit.domain.Card;
@@ -26,6 +27,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private EditText back;
     private Card card;
     private Intent intent;
+    private DBHelper helper;
 
 
     @Override
@@ -94,6 +96,8 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         card.setFront(frontString);
         card.setBack(backString);
         set.addCard(card);
+        helper = new DBHelper(getApplicationContext());
+        helper.insertCard(frontString, backString, set.getTitle());
         intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
         intent.putExtra("CARDSET_POSITION", index);
         startActivity(intent);

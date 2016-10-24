@@ -40,11 +40,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 CARD_COLUMN_FRONT + " TEXT, " +
                 CARD_COLUMN_BACK + " TEXT, " +
                 CARD_COLUMN_CARDSETID + " INTEGER, " +
-                "FOREIGN KEY(" + CARD_COLUMN_CARDSETID + ") REFERENCES " + CARDSET_TABLE_NAME + "(" + CARDSET_COLUMN_ID + ")"
+                "FOREIGN KEY(" + CARD_COLUMN_CARDSETID + ") REFERENCES " + CARDSET_TABLE_NAME + "(" + CARDSET_COLUMN_ID + "));"
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + CARDSET_TABLE_NAME + "(" +
                 CARDSET_COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                CARDSET_COLUMN_NAME + "TEXT)"
+                CARDSET_COLUMN_NAME + "TEXT);"
         );
     }
     public boolean insertCardSet(String name) {
