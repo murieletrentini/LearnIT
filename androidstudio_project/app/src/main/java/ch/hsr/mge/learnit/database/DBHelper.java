@@ -100,16 +100,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean insertCard(String front, String back, String cardSetName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cardSetCursor = db.rawQuery( "SELECT " + CardSetHelper.CARDSET_COLUMN_ID + " FROM " +
-                CardSetHelper.CARDSET_TABLE_NAME + " WHERE " + CardSetHelper.CARDSET_COLUMN_NAME +
-                " = ?", new String[] { cardSetName });
+        Cursor cardSetCursor = db.rawQuery( "SELECT '" + CardSetHelper.CARDSET_COLUMN_ID + "' FROM " +
+                CardSetHelper.CARDSET_TABLE_NAME + " WHERE '" + CardSetHelper.CARDSET_COLUMN_NAME +
+                "' = ?", new String[] { cardSetName });
         Integer cardSetId;
         cardSetCursor.moveToFirst();
-        cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
+        //cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
         ContentValues values =  new ContentValues();
         values.put(CARD_COLUMN_FRONT, front);
         values.put(CARD_COLUMN_BACK, back);
-        values.put(CARD_COLUMN_CARDSETID, cardSetId);
+        //values.put(CARD_COLUMN_CARDSETID, cardSetId);
         db.insert(CARD_TABLE_NAME, null, values);
         cardSetCursor.close();
         return true;
