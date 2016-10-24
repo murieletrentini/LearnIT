@@ -108,12 +108,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 "' = ?", new String[] { cardSetName });
         Integer cardSetId;
         cardSetCursor.moveToFirst();
-        //cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
+        cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
         ContentValues values =  new ContentValues();
         values.put(CARDSET_COLUMN_ID, ++cardIDCounter);
         values.put(CARD_COLUMN_FRONT, front);
         values.put(CARD_COLUMN_BACK, back);
-        //values.put(CARD_COLUMN_CARDSETID, cardSetId);
+        values.put(CARD_COLUMN_CARDSETID, cardSetId);
         db.insert(CARD_TABLE_NAME, null, values);
         cardSetCursor.close();
         return true;
