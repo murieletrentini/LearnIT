@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + CARDSET_TABLE_NAME + "(" +
                 CARDSET_COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                CARDSET_COLUMN_NAME + "TEXT);"
+                CARDSET_COLUMN_NAME + " TEXT);"
         );
     }
     public boolean insertCardSet(String name) {
@@ -102,11 +102,12 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertCard(String front, String back, String cardSetName) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cardSetCursor = db.rawQuery( "SELECT '" + CARDSET_COLUMN_ID + "' FROM " +
                 CARDSET_TABLE_NAME + " WHERE '" + CARDSET_COLUMN_NAME +
                 "' = ?", new String[] { cardSetName });
         Integer cardSetId;
+        db = this.getWritableDatabase();
         cardSetCursor.moveToFirst();
         cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
         ContentValues values =  new ContentValues();
