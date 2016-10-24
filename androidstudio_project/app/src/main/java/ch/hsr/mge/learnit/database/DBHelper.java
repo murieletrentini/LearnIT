@@ -29,6 +29,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "SQLiteDatabase.db";
+    private int cardSetIDCounter = 0;
+    private int cardIDCounter = 0;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,6 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values  = new ContentValues();
         values.put(CARDSET_COLUMN_NAME, name);
+        values.put(CARDSET_COLUMN_ID, ++cardSetIDCounter);
         db.insert(CARDSET_TABLE_NAME, null, values);
         return true;
     }
@@ -99,14 +102,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertCard(String front, String back, String cardSetName) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cardSetCursor = db.rawQuery( "SELECT '" + CardSetHelper.CARDSET_COLUMN_ID + "' FROM " +
-                CardSetHelper.CARDSET_TABLE_NAME + " WHERE '" + CardSetHelper.CARDSET_COLUMN_NAME +
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cardSetCursor = db.rawQuery( "SELECT '" + CARDSET_COLUMN_ID + "' FROM " +
+                CARDSET_TABLE_NAME + " WHERE '" + CARDSET_COLUMN_NAME +
                 "' = ?", new String[] { cardSetName });
         Integer cardSetId;
         cardSetCursor.moveToFirst();
         //cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
         ContentValues values =  new ContentValues();
+        values.put(CARDSET_COLUMN_ID, ++cardIDCounter);
         values.put(CARD_COLUMN_FRONT, front);
         values.put(CARD_COLUMN_BACK, back);
         //values.put(CARD_COLUMN_CARDSETID, cardSetId);
