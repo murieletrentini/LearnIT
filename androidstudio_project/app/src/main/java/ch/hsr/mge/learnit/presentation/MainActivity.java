@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                     CardSet set =  new CardSet();
                     sets.addCardSet(set);
                     Intent intent = new Intent(MainActivity.this, CardSetDetailActivity.class);
+                    int position = sets.getPosition(set);
+                    intent.putExtra("CARDSET_POSITION", position);
                     startActivity(intent);
             }
         });

@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
@@ -37,7 +39,7 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
         setSupportActionBar(toolbar);
 
 
-        TextView title = (TextView) findViewById(R.id.titleText);
+        final EditText title = (EditText) findViewById(R.id.titleText);
         Bundle extras = getIntent().getExtras();
         Application app = (Application) getApplication();
         sets = app.getCardSets();
@@ -46,6 +48,23 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
             set = sets.get(index);
             title.setText(set.getTitle());
         }
+
+        title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                set.setTitle(title.getText().toString());
+            }
+        });
 
         RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
 
