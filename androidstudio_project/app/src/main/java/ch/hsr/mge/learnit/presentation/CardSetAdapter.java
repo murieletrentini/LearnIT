@@ -39,7 +39,6 @@ public class CardSetAdapter extends
         public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
-                CardSet set = sets.get(position);
                 // We can access the data within the views
                 Intent intent = new Intent(context, CardSetDetailActivity.class);
                 intent.putExtra("CARDSET_POSITION", position);

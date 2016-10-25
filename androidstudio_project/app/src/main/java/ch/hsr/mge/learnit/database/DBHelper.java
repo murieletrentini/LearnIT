@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
@@ -18,9 +15,10 @@ import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_CARDSETNAME;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_FRONT;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_ID;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_TABLE_NAME;
-//import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_ID;
 import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_NAME;
 import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_TABLE_NAME;
+
+//import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_ID;
 
 /**
  * Created by nico on 21/10/16.
@@ -64,8 +62,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public List<Card> getCardSet(String name) {
-        List<Card> cardSet = new ArrayList<>();
+    public CardSet getCardSet(String name) {
+        CardSet set = new CardSet(name);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery( "SELECT * FROM " + CARDSET_TABLE_NAME + " WHERE " +
                 CARDSET_COLUMN_NAME + "=?", new String[] { name });
@@ -73,27 +71,25 @@ public class DBHelper extends SQLiteOpenHelper {
                 Card card = new Card();
                 card.setFront(cursor.getString(1));
                 card.setBack(cursor.getString(2));
-                cardSet.add(card);
+                set.addCard(card);
             }
         cursor.close();
-            return cardSet;
+            return set;
         }
 
 
     public CardSets getAllCardSets() {
-        List<CardSet> cardSetsList = new ArrayList<>();
-        CardSets cardSets;
+        CardSets cardSets = new CardSets();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery( "SELECT " + CARDSET_COLUMN_NAME + " FROM " + CARDSET_TABLE_NAME, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                CardSet cardSet = new CardSet();
-                cardSet.setTitle(cursor.getString(0));
-                cardSetsList.add(cardSet);
+                String title = cursor.getString(0);
+                CardSet cardSet = getCardSet(title);
+                cardSets.addCardSet(cardSet);
                 cursor.moveToNext();
             }
         }
-        cardSets = new CardSets(cardSetsList);
         cursor.close();
         return cardSets;
     }

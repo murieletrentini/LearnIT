@@ -14,8 +14,8 @@ public class CardSets {
         sets.add(set);
     }
 
-    public CardSets(List<CardSet> sets) {
-        this.sets = sets;
+    public List<CardSet> getCardSetList (){
+        return sets;
     }
 
     public CardSet get(int position) {

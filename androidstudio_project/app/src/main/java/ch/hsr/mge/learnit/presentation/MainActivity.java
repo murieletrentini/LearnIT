@@ -20,6 +20,7 @@ import ch.hsr.mge.learnit.domain.CardSets;
 public class MainActivity extends AppCompatActivity {
     private CardSets sets;
     private DBHelper helper;
+    private Application app;
 
 
     @Override
@@ -30,11 +31,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardSetView);
-        Application app = (Application) getApplication();
-        //getting sets directly from DB
-        helper = new DBHelper(getApplicationContext());
-        sets = helper.getAllCardSets();
+        app = (Application) getApplication();
 
+        sets = app.getCardSets();
         CardSetAdapter adapter = new CardSetAdapter(this, sets);
         recyclerViewCardSets.setAdapter(adapter);
         recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
@@ -45,12 +44,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                     CardSet set =  new CardSet();
                     sets.addCardSet(set);
+                set.setTitle("Title");
                     Intent intent = new Intent(MainActivity.this, CardSetDetailActivity.class);
                     int position = sets.getPosition(set);
                     intent.putExtra("CARDSET_POSITION", position);
                     startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onPause(){
+        app.saveData(sets);
     }
 
 
