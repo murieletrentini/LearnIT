@@ -61,8 +61,6 @@ public class CardSetAdapter extends
         View v = layoutInflater.inflate(R.layout.card_set_layout, parent, false);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView amountOfCards = (TextView) v.findViewById(R.id.cardAmount);
-        String setName = textView.getText().toString();
-
         return new ViewHolder(context, v, textView, amountOfCards);
     }
 

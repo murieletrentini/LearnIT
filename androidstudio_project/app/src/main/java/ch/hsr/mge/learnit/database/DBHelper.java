@@ -11,6 +11,7 @@ import java.util.List;
 
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
+import ch.hsr.mge.learnit.domain.CardSets;
 
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_BACK;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_CARDSETNAME;
@@ -79,15 +80,20 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
 
-    public List<CardSet> getAllCardSets() {
-        List<CardSet> cardSets = new ArrayList<>();
+    public CardSets getAllCardSets() {
+        List<CardSet> cardSetsList = new ArrayList<>();
+        CardSets cardSets;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery( "SELECT " + CARDSET_COLUMN_NAME + " FROM " + CARDSET_TABLE_NAME, null);
-        while (cursor.moveToFirst()) {
-            CardSet cardSet = new CardSet();
-            cardSet.setTitle(cursor.getString(1));
-            cardSets.add(cardSet);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                CardSet cardSet = new CardSet();
+                cardSet.setTitle(cursor.getString(0));
+                cardSetsList.add(cardSet);
+                cursor.moveToNext();
+            }
         }
+        cardSets = new CardSets(cardSetsList);
         cursor.close();
         return cardSets;
     }

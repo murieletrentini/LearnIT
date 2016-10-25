@@ -13,11 +13,13 @@ import android.view.View;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
+import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
 public class MainActivity extends AppCompatActivity {
     private CardSets sets;
+    private DBHelper helper;
 
 
     @Override
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardSetView);
         Application app = (Application) getApplication();
-
-        sets = app.getCardSets();
+        //getting sets directly from DB
+        helper = new DBHelper(getApplicationContext());
+        sets = helper.getAllCardSets();
 
         CardSetAdapter adapter = new CardSetAdapter(this, sets);
         recyclerViewCardSets.setAdapter(adapter);

@@ -14,6 +14,10 @@ public class CardSets {
         sets.add(set);
     }
 
+    public CardSets(List<CardSet> sets) {
+        this.sets = sets;
+    }
+
     public CardSet get(int position) {
         return sets.get(position);
     }
