@@ -15,6 +15,7 @@ import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_CARDSETNAME;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_FRONT;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_ID;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_TABLE_NAME;
+import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_ID;
 import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_NAME;
 import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_TABLE_NAME;
 
@@ -43,7 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + CARD_COLUMN_CARDSETNAME+ ") REFERENCES " + CARDSET_TABLE_NAME + "(" + CARD_COLUMN_CARDSETNAME + "));"
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + CARDSET_TABLE_NAME + "(" +
-                CARDSET_COLUMN_NAME + " TEXT PRIMARY KEY);"
+                CARDSET_COLUMN_ID + " Integer PRIMARY KEY, " +
+                CARDSET_COLUMN_NAME + " TEXT);"
         );
     }
     public boolean insertCardSet(String name) {
@@ -129,5 +131,12 @@ public class DBHelper extends SQLiteOpenHelper {
         numberCursor.close();
         return amountOfCards;
     }
+
+    public void dropAndRecreate(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE " + CARD_TABLE_NAME + " ;");
+        db.execSQL("DROP TABLE " + CARDSET_TABLE_NAME + " ;");
+        onCreate(db);
+    }
+
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){}
 }

@@ -8,6 +8,7 @@ public class CardSet {
 
     private List<Card> cardSet = new ArrayList<>();
     private String title;
+    private int id;
 
     public CardSet(String title) {
         this.title = title;
@@ -32,6 +33,10 @@ public class CardSet {
         if (!cardSet.contains(card)){
             cardSet.add(card);
         }
+    }
+
+    public List<Card> getCardList() {
+        return cardSet;
     }
 
     public int getPosition(Card card) {

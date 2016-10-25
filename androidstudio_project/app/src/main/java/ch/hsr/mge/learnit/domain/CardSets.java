@@ -12,6 +12,9 @@ public class CardSets {
         Card card = new Card("testfront", "testback");
         set.addCard(card);
         sets.add(set);
+        CardSet set2 = new CardSet("Test2");
+        set2.addCard(card);
+        sets.add(set2);
     }
 
     public List<CardSet> getCardSetList (){

@@ -4,6 +4,7 @@ public class Card {
     private String front;
     private String back;
     private boolean isCorrect;
+    private int id;
 
     public Card(String front, String back){
         this.front = front;
