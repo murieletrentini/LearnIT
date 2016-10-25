@@ -32,9 +32,11 @@ public class Application extends android.app.Application {
         List<Card> cardList;
         for (CardSet set : setList){
             cardList = set.getCardList();
-            helper.insertCardSet(set.getTitle());
-            for (Card card : cardList) {
-                helper.insertCard(card.getFront(), card.getBack(), set.getTitle());
+            if (!sets.getCardSetList().contains(set)) {
+                helper.insertCardSet(set.getTitle());
+                for (Card card : cardList) {
+                    helper.insertCard(card.getFront(), card.getBack(), set.getTitle());
+                }
             }
 
         }
