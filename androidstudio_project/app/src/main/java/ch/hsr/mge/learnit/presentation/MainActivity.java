@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                     CardSet set =  new CardSet();
                     sets.addCardSet(set);
-                set.setTitle("Title");
+                    set.setTitle("Title");
                     Intent intent = new Intent(MainActivity.this, CardSetDetailActivity.class);
                     int position = sets.getPosition(set);
                     intent.putExtra("CARDSET_POSITION", position);

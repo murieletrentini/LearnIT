@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + CARDSET_TABLE_NAME + "(" +
                 CARDSET_COLUMN_ID + " Integer PRIMARY KEY, " +
-                CARDSET_COLUMN_NAME + " TEXT);"
+                CARDSET_COLUMN_NAME + " TEXT UNIQUE);"
         );
     }
     public boolean insertCardSet(String name) {
