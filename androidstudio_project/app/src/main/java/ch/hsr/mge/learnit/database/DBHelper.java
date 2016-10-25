@@ -69,14 +69,17 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery( "SELECT * FROM " + CARDSET_TABLE_NAME + " WHERE " +
                 CARDSET_COLUMN_NAME + "=?", new String[] { name });
-        while (cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
                 Card card = new Card();
                 card.setFront(cursor.getString(1));
                 card.setBack(cursor.getString(2));
                 set.addCard(card);
+                cursor.moveToNext();
             }
+        }
         cursor.close();
-            return set;
+        return set;
         }
 
 
