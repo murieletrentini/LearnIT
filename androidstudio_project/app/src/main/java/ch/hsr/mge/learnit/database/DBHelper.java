@@ -13,11 +13,11 @@ import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_BACK;
-import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_CARDSETID;
+import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_CARDSETNAME;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_FRONT;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_ID;
 import static ch.hsr.mge.learnit.database.CardHelper.CARD_TABLE_NAME;
-import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_ID;
+//import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_ID;
 import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_NAME;
 import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_TABLE_NAME;
 
@@ -29,7 +29,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "SQLiteDatabase.db";
-    private int cardSetIDCounter = 0;
     private int cardIDCounter = 0;
 
     public DBHelper(Context context) {
@@ -41,29 +40,26 @@ public class DBHelper extends SQLiteOpenHelper {
                 CARD_COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 CARD_COLUMN_FRONT + " TEXT, " +
                 CARD_COLUMN_BACK + " TEXT, " +
-                CARD_COLUMN_CARDSETID + " INTEGER, " +
-                "FOREIGN KEY(" + CARD_COLUMN_CARDSETID + ") REFERENCES " + CARDSET_TABLE_NAME + "(" + CARDSET_COLUMN_ID + "));"
+                CARD_COLUMN_CARDSETNAME + " INTEGER, " +
+                "FOREIGN KEY(" + CARD_COLUMN_CARDSETNAME+ ") REFERENCES " + CARDSET_TABLE_NAME + "(" + CARD_COLUMN_CARDSETNAME + "));"
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + CARDSET_TABLE_NAME + "(" +
-                CARDSET_COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                CARDSET_COLUMN_NAME + " TEXT);"
+                CARDSET_COLUMN_NAME + " TEXT PRIMARY KEY);"
         );
     }
     public boolean insertCardSet(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values  = new ContentValues();
         values.put(CARDSET_COLUMN_NAME, name);
-        values.put(CARDSET_COLUMN_ID, ++cardSetIDCounter);
         db.insert(CARDSET_TABLE_NAME, null, values);
         return true;
     }
 
-    public boolean updateCardSet(Integer id, String name) {
+    public boolean updateCardSet(String oldName, String newName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(CARDSET_TABLE_NAME, name);
-        //HACK
-        db.update(CARDSET_TABLE_NAME, values, CARDSET_COLUMN_ID + " ? ", new String[] { Integer.toString(id) });
+        values.put(CARDSET_COLUMN_NAME, newName);
+        db.update(CARDSET_TABLE_NAME, values, CARDSET_COLUMN_NAME + " ? ", new String[] { oldName });
         return true;
     }
 
@@ -102,21 +98,20 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertCard(String front, String back, String cardSetName) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cardSetCursor = db.rawQuery( "SELECT '" + CARDSET_COLUMN_ID + "' FROM " +
-                CARDSET_TABLE_NAME + " WHERE '" + CARDSET_COLUMN_NAME +
-                "' = ?", new String[] { cardSetName });
-        Integer cardSetId;
-        db = this.getWritableDatabase();
-        cardSetCursor.moveToFirst();
-        cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
+        //SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor cardSetCursor = db.rawQuery( "SELECT '" + CARDSET_COLUMN_ID + "' FROM " +
+        //        CARDSET_TABLE_NAME + " WHERE '" + CARDSET_COLUMN_NAME +
+        //        "' = ?", new String[] { cardSetName });
+        SQLiteDatabase db = this.getWritableDatabase();
+        //cardSetCursor.moveToFirst();
+        //cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
         ContentValues values =  new ContentValues();
-        values.put(CARDSET_COLUMN_ID, ++cardIDCounter);
+        //values.put(CARDSET_COLUMN_ID, ++cardIDCounter);
         values.put(CARD_COLUMN_FRONT, front);
         values.put(CARD_COLUMN_BACK, back);
-        values.put(CARD_COLUMN_CARDSETID, cardSetId);
+        values.put(CARD_COLUMN_CARDSETNAME, cardSetName);
         db.insert(CARD_TABLE_NAME, null, values);
-        cardSetCursor.close();
+        //cardSetCursor.close();
         return true;
     }
 

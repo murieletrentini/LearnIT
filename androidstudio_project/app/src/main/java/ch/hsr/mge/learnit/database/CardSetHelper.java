@@ -15,7 +15,6 @@ public class CardSetHelper extends DBHelper {
     private static final int DATABASE_VERSION = 1;
 
     public static final String CARDSET_TABLE_NAME = "cardset";
-    public static final String CARDSET_COLUMN_ID = "cardsetid";
     public static final String CARDSET_COLUMN_NAME = "cardsetname";
     //may not be necessary
     public static final String CARDSET_COLUMN_AMOUNTOFCARDS = "amountOfCards";

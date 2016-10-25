@@ -18,7 +18,7 @@ public class CardHelper extends DBHelper{
     public static final String CARD_COLUMN_ID = "cardid";
     public static final String CARD_COLUMN_FRONT = "front";
     public static final String CARD_COLUMN_BACK = "back";
-    public static final String CARD_COLUMN_CARDSETID = "cardset";
+    public static final String CARD_COLUMN_CARDSETNAME= "cardset";
 
 
 
