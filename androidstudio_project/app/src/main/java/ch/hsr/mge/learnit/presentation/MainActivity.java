@@ -61,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
+    public void onResume(){
+        super.onResume();
+        sets = app.getCardSets();
+        RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardSetView);
+        CardSetAdapter adapter = new CardSetAdapter(this, sets);
+        recyclerViewCardSets.setAdapter(adapter);
+        recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
