@@ -26,7 +26,8 @@
         android:layout_marginBottom="160dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/frontText"
@@ -35,7 +36,8 @@
             android:text="FrontSeite"
             android:textSize="36sp"
             android:textAlignment="center"
-            android:layout_gravity="center_vertical|center_horizontal" />
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:elevation="4dp"/>
 
         <TextView
             android:id="@+id/backText"
@@ -44,7 +46,8 @@
             android:text="BackSeite"
             android:textSize="36sp"
             android:textAlignment="center"
-            android:layout_gravity="center_vertical|center_horizontal" />
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:elevation="4dp"/>
 
     </ViewSwitcher>
 

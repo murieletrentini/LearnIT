@@ -13,12 +13,14 @@ import android.widget.EditText;
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.database.DBHelper;
-import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
+import ch.hsr.mge.learnit.domain.CardSets;
+import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
 
 public class AddCardActivity extends AppCompatActivity implements DialogListener {
     private int index;
+    private CardSets sets;
     private CardSet set;
     private EditText front;
     private String frontString;
@@ -28,7 +30,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private Intent intent;
     private Application app;
     private DBHelper helper;
-    private boolean deleted = false;
+    private boolean saved = false;
 
 
     @Override
@@ -46,7 +48,8 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         Application app = (Application) getApplication();
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("CARDSET_POSITION");
-        set = app.getCardSets().get(index);
+        sets= app.getCardSets();
+        set = sets.get(index);
 
         front = (EditText) findViewById(R.id.frontSideText);
         back = (EditText) findViewById(R.id.backSideText);
@@ -72,6 +75,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
+                saved= true;
                 frontString = front.getText().toString();
                 backString = back.getText().toString();
                 if(frontString.isEmpty() || backString.isEmpty()) {
@@ -89,7 +93,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
                 return true;
             case R.id.action_removeCard:
                 set.removeCard(card);
-                deleted= true;
                 Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
                 intent.putExtra("CARDSET_POSITION", index);
                 startActivity(intent);
@@ -124,15 +127,23 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     @Override
     public void onPause() {
         super.onPause();
-        if (!deleted){
+        if (saved){
             if (helper == null)
                 helper = new DBHelper(getApplicationContext());
             card.setFront(frontString.isEmpty()?"":frontString);
             card.setBack(backString.isEmpty()?"":backString);
             set.addCard(card);
             app = (Application) getApplication();
-            app.saveData(helper.getAllCardSets());
+            //TODO: helper.getAllCardSets()
+            app.saveData(sets);
         }
-
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        sets = ((Application)getApplication()).getCardSets();
+        set = sets.get(index);
+    }
+
 }

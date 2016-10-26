@@ -20,12 +20,13 @@
         </activity>
         <activity android:name=".presentation.CardSetDetailActivity"
             android:launchMode="singleTop"/>
-        <activity android:name=".presentation.PlayMode" />
+        <activity android:name=".presentation.PlayMode"
+            android:parentActivityName=".presentation.CardSetDetailActivity"/>
         <activity
             android:name=".presentation.WellDoneActivity"
             android:parentActivityName=".presentation.CardSetDetailActivity" />
         <activity android:name=".presentation.AddCardActivity"
-            android:parentActivityName=".presentation.CardSetDetailActivity"></activity>
+            android:parentActivityName=".presentation.CardSetDetailActivity" />
     </application>
 
 </manifest>

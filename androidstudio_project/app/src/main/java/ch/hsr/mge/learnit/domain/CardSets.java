@@ -10,7 +10,9 @@ public class CardSets {
     public CardSets(){
         CardSet set = (new CardSet("Test"));
         Card card = new Card("testfront", "testback");
+        Card card2 = new Card("front", "back");
         set.addCard(card);
+        set.addCard(card2);
         sets.add(set);
         CardSet set2 = new CardSet("Test2");
         set2.addCard(card);

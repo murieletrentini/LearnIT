@@ -1,12 +1,7 @@
 package ch.hsr.mge.learnit.database;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import static ch.hsr.mge.learnit.database.DBHelper.DATABASE_NAME;
 
 /**
  * Created by nico on 21/10/16.

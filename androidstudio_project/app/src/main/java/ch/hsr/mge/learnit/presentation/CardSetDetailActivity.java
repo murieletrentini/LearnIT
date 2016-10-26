@@ -18,9 +18,9 @@ import android.widget.EditText;
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.database.DBHelper;
-import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
+import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
 
 public class CardSetDetailActivity extends AppCompatActivity implements DialogListener {
     private CardSets sets;
@@ -28,6 +28,7 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     private int index;
     private Intent intent;
     private DBHelper helper;
+    private Application app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        app = (Application) getApplication();
 
         final EditText title = (EditText) findViewById(R.id.titleText);
         Bundle extras = getIntent().getExtras();
@@ -76,9 +78,11 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CardSetDetailActivity.this, PlayMode.class);
-                intent.putExtra("CARDSET_POSITION", index);
-                startActivity(intent);
+                if (!set.isEmpty()) {
+                    Intent intent = new Intent(CardSetDetailActivity.this, PlayMode.class);
+                    intent.putExtra("CARDSET_POSITION", index);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -118,11 +122,29 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
 
     @Override
     public void onFinishDialog(int resultCode) {
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             sets.removeCardSet(index);
             intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        app.saveData(sets);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sets = app.getCardSets();
+        set = sets.get(index);
+        RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
+        CardAdapter adapter = new CardAdapter(this, set, index);
+        recyclerViewCardSets.setAdapter(adapter);
+        recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
     }
 }
 
