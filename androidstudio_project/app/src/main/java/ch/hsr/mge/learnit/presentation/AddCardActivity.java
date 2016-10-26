@@ -26,6 +26,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private EditText back;
     private Card card;
     private Intent intent;
+    private Application app;
     private DBHelper helper;
 
 
@@ -98,8 +99,10 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         card.setBack(backString.isEmpty()?"":backString);
         set.addCard(card);
         helper = new DBHelper(getApplicationContext());
-        //helper.insertCardSet(set.getTitle());
+        helper.insertCardSet(set.getTitle());
+        helper.insertCardSet(set.getTitle());
         helper.insertCard(frontString, backString, set.getTitle());
+
         intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
         intent.putExtra("CARDSET_POSITION", index);
         startActivity(intent);
@@ -110,5 +113,11 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         if (resultCode == RESULT_OK){
             saveAndBackToParentActivity();
         }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        app = (Application) getApplication();
+        app.saveData(helper.getAllCardSets());
     }
 }
