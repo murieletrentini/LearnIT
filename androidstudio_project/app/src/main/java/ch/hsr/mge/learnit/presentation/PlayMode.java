@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
@@ -20,7 +23,7 @@ public class PlayMode extends AppCompatActivity {
     private TextView front;
     private TextView back;
     private int index;
-
+    Animation slide_in_left, slide_out_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,29 @@ public class PlayMode extends AppCompatActivity {
         back = (TextView) findViewById(R.id.backText);
         currCard = set.get(counter);
         refreshCardText();
+
+        final ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.viewSwitcher);
+        slide_in_left = AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_in_left);
+        slide_out_right = AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_out_right);
+
+        switcher.setInAnimation(slide_in_left);
+        switcher.setOutAnimation(slide_out_right);
+
+        front.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switcher.showNext();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switcher.showPrevious();
+            }
+        });
 
         ImageButton thumbsUp = (ImageButton) findViewById(R.id.thumbsUp);
         ImageButton thumbsDown = (ImageButton) findViewById(R.id.thumbsDown);
