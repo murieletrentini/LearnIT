@@ -29,6 +29,8 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     private Intent intent;
     private DBHelper helper;
     private Application app;
+    private boolean titleChanged = false;
+    private String oldName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +55,14 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
         title.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                oldName = set.getTitle();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 set.setTitle(title.getText().toString());
+                titleChanged = true;
+
             }
 
             @Override
@@ -132,6 +136,10 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     @Override
     public void onPause() {
         super.onPause();
+        if (titleChanged) {
+            helper = new DBHelper(getApplicationContext());
+            helper.updateCardSet(oldName, set.getTitle());
+        }
         app.saveData(sets);
     }
 

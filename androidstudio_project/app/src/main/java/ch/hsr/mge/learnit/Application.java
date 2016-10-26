@@ -28,6 +28,7 @@ public class Application extends android.app.Application {
     }
 
     public void saveData(CardSets sets){
+        //helper.dropAndRecreate();
         List<CardSet> setList = sets.getCardSetList();
         List<Card> cardList;
         for (CardSet set : setList){

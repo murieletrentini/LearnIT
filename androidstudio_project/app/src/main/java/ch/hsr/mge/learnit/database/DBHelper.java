@@ -60,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(CARDSET_COLUMN_NAME, newName);
-        db.update(CARDSET_TABLE_NAME, values, CARDSET_COLUMN_NAME + " ? ", new String[] { oldName });
+        db.update(CARDSET_TABLE_NAME, values, CARDSET_COLUMN_NAME + "=?", new String[] { oldName });
         return true;
     }
 
@@ -135,7 +135,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return amountOfCards;
     }
 
-    public void dropAndRecreate(SQLiteDatabase db) {
+    public void dropAndRecreate() {
+        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE " + CARD_TABLE_NAME + " ;");
         db.execSQL("DROP TABLE " + CARDSET_TABLE_NAME + " ;");
         onCreate(db);

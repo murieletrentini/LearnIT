@@ -108,8 +108,8 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         card.setFront(frontString.isEmpty()?"":frontString);
         card.setBack(backString.isEmpty()?"":backString);
         set.addCard(card);
+        // app is buggy without these next lines
         helper = new DBHelper(getApplicationContext());
-        helper.insertCardSet(set.getTitle());
         helper.insertCardSet(set.getTitle());
         helper.insertCard(frontString, backString, set.getTitle());
 
