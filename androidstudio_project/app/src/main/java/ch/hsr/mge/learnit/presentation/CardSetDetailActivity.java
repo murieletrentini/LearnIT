@@ -18,8 +18,7 @@ import android.widget.EditText;
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.database.DBHelper;
-import ch.hsr.mge.learnit.dialogs.YesNoDialog;
-import ch.hsr.mge.learnit.dialogs.YesNoDialog.DialogListener;
+import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
@@ -97,7 +96,10 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
-
+            case R.id.action_goHome:
+                intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.action_addCard:
                 intent = new Intent(CardSetDetailActivity.this, AddCardActivity.class);
                 intent.putExtra("CARDSET_POSITION", index);
@@ -120,7 +122,7 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     @Override
     public void onFinishDialog(int resultCode) {
         if (resultCode == RESULT_OK){
-            sets.removeCardSet(index);
+            // sets.removeCardSet(index);
             intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
             startActivity(intent);
         }

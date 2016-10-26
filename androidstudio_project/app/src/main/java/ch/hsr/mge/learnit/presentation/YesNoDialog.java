@@ -1,4 +1,4 @@
-package ch.hsr.mge.learnit.dialogs;
+package ch.hsr.mge.learnit.presentation;
 
 import android.app.Activity;
 import android.app.Dialog;

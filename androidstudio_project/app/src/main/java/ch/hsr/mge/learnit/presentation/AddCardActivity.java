@@ -13,8 +13,7 @@ import android.widget.EditText;
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.database.DBHelper;
-import ch.hsr.mge.learnit.dialogs.YesNoDialog;
-import ch.hsr.mge.learnit.dialogs.YesNoDialog.DialogListener;
+import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 
@@ -85,6 +84,8 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
                 } else {
                     saveAndBackToParentActivity();
                 }
+            case R.id.action_goHome:
+                startActivity(new Intent(AddCardActivity.this, MainActivity.class));
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -93,8 +94,8 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     }
 
     private void saveAndBackToParentActivity(){
-        card.setFront(frontString);
-        card.setBack(backString);
+        card.setFront(frontString.isEmpty()?"":frontString);
+        card.setBack(backString.isEmpty()?"":backString);
         set.addCard(card);
         helper = new DBHelper(getApplicationContext());
         helper.insertCardSet(set.getTitle());

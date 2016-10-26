@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ch.hsr.mge.learnit.presentation.MainActivity">
 
-
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
