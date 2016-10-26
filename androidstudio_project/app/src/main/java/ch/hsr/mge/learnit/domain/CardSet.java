@@ -63,4 +63,11 @@ public class CardSet {
         }
         return correct;
     }
+
+    public void removeCard(Card card) {
+        int index = cardSet.indexOf(card);
+        if (index != -1){
+            cardSet.remove(index);
+        }
+    }
 }

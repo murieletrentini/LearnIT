@@ -11,10 +11,9 @@
         android:icon="@drawable/ic_check_circle_white_48dp"
         android:title="save Card"
         app:showAsAction="ifRoom"/>
-
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_removeCard"
+        android:icon="@drawable/ic_delete_forever_white_48dp"
+        android:title="remove Card"
+        app:showAsAction="ifRoom"/>
 </menu>

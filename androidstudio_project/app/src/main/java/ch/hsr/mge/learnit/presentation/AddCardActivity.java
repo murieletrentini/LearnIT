@@ -28,6 +28,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private Intent intent;
     private Application app;
     private DBHelper helper;
+    private boolean deleted = false;
 
 
     @Override
@@ -70,9 +71,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
             case R.id.action_save:
                 frontString = front.getText().toString();
                 backString = back.getText().toString();
@@ -85,8 +83,17 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
                 } else {
                     saveAndBackToParentActivity();
                 }
+                return true;
             case R.id.action_goHome:
                 startActivity(new Intent(AddCardActivity.this, MainActivity.class));
+                return true;
+            case R.id.action_removeCard:
+                set.removeCard(card);
+                deleted= true;
+                Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
+                intent.putExtra("CARDSET_POSITION", index);
+                startActivity(intent);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -117,12 +124,15 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     @Override
     public void onPause() {
         super.onPause();
-        if (helper == null)
-            helper = new DBHelper(getApplicationContext());
-        card.setFront(frontString.isEmpty()?"":frontString);
-        card.setBack(backString.isEmpty()?"":backString);
-        set.addCard(card);
-        app = (Application) getApplication();
-        app.saveData(helper.getAllCardSets());
+        if (!deleted){
+            if (helper == null)
+                helper = new DBHelper(getApplicationContext());
+            card.setFront(frontString.isEmpty()?"":frontString);
+            card.setBack(backString.isEmpty()?"":backString);
+            set.addCard(card);
+            app = (Application) getApplication();
+            app.saveData(helper.getAllCardSets());
+        }
+
     }
 }

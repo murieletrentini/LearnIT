@@ -93,9 +93,6 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
             case R.id.action_goHome:
                 intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -122,7 +119,7 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     @Override
     public void onFinishDialog(int resultCode) {
         if (resultCode == RESULT_OK){
-            // sets.removeCardSet(index);
+            sets.removeCardSet(index);
             intent = new Intent(CardSetDetailActivity.this, MainActivity.class);
             startActivity(intent);
         }
