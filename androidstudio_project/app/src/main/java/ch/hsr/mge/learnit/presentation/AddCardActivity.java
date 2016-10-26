@@ -31,6 +31,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private Application app;
     private DBHelper helper;
     private boolean saved = false;
+    private String [] oldNames = new String[2];
 
 
     @Override
@@ -53,12 +54,24 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
 
         front = (EditText) findViewById(R.id.frontSideText);
         back = (EditText) findViewById(R.id.backSideText);
+        //oldNames[0] = front.getText().toString();
+        //oldNames[1] = back.getText().toString();
 
         if (getIntent().hasExtra("CARD_POSITION")) {
             //card already exists -> edit mode
+
             card = set.get(extras.getInt("CARD_POSITION"));
             front.setText(card.getFront());
             back.setText(card.getBack());
+            //TODO: not exactly sure on how to check if card is a new one or an old one,
+            // code needs to be moved, maybe check on empty strings at start
+            //helper = new DBHelper(getApplicationContext());
+            //String newNames[] = new String[2];
+            //newNames[0] = front.getText().toString();
+            //newNames[1] = back.getText().toString();
+            //helper.updateCard(oldNames, newNames);
+
+
         } else {
             card = new Card();
         }

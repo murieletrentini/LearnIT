@@ -64,6 +64,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateCard(String[] oldStrings, String[] newStrings) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(CARD_COLUMN_FRONT, newStrings[0]);
+        db.update(CARD_TABLE_NAME, values, CARD_COLUMN_FRONT + "=?", new String[] { oldStrings[0] });
+        values = new ContentValues();
+        values.put(CARD_COLUMN_BACK, newStrings[1]);
+        db.update(CARD_TABLE_NAME, values, CARD_COLUMN_BACK + "=?", new String[] { oldStrings[1] });
+        return true;
+    }
+
     public CardSet getCardSet(String name) {
         CardSet set = new CardSet(name);
         SQLiteDatabase db = this.getReadableDatabase();
