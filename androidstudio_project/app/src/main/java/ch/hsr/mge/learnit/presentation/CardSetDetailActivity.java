@@ -18,6 +18,7 @@ import android.widget.EditText;
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.database.DBHelper;
+import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
@@ -107,7 +108,11 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
                 return true;
             case R.id.action_addCard:
                 intent = new Intent(CardSetDetailActivity.this, AddCardActivity.class);
+                Card newCard = new Card();
+                set.addCard(newCard);
+                int indexCard = set.getPosition(newCard);
                 intent.putExtra("CARDSET_POSITION", index);
+                intent.putExtra("CARD_POSITION", indexCard);
                 startActivity(intent);
                 return true;
             case R.id.action_removeSet:

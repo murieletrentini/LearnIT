@@ -20,6 +20,7 @@ import ch.hsr.mge.learnit.presentation.YesNoDialog.DialogListener;
 
 public class AddCardActivity extends AppCompatActivity implements DialogListener {
     private int index;
+    private int cardPosition;
     private CardSets sets;
     private CardSet set;
     private EditText front;
@@ -30,7 +31,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private Intent intent;
     private Application app;
     private DBHelper helper;
-    private boolean saved = false;
     private String [] oldNames = new String[2];
 
 
@@ -42,22 +42,24 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBar ab = getSupportActionBar();
-        // Enable the Up button
-        ab.setDisplayHomeAsUpEnabled(true);
-
         Application app = (Application) getApplication();
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("CARDSET_POSITION");
+        cardPosition = extras.getInt("CARD_POSITION");
         sets= app.getCardSets();
         set = sets.get(index);
+        card = set.get(cardPosition);
 
         front = (EditText) findViewById(R.id.frontSideText);
         back = (EditText) findViewById(R.id.backSideText);
+
+        front.setText(card.getFront());
+        back.setText(card.getBack());
+
         //oldNames[0] = front.getText().toString();
         //oldNames[1] = back.getText().toString();
 
-        if (getIntent().hasExtra("CARD_POSITION")) {
+       /* if (getIntent().hasExtra("CARD_POSITION")) {
             //card already exists -> edit mode
 
             card = set.get(extras.getInt("CARD_POSITION"));
@@ -74,7 +76,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
 
         } else {
             card = new Card();
-        }
+        }*/
     }
 
     @Override
@@ -88,10 +90,9 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                saved= true;
                 frontString = front.getText().toString();
                 backString = back.getText().toString();
-                if(frontString.isEmpty() || backString.isEmpty()) {
+                if(frontString.equals("") || backString.equals("")) {
                     DialogFragment alert = new YesNoDialog();
                     Bundle args = new Bundle();
                     args.putString("MESSAGE", "Your card has unfilled sides.");
@@ -118,8 +119,8 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     }
 
     private void saveAndBackToParentActivity(){
-        card.setFront(frontString.isEmpty()?"":frontString);
-        card.setBack(backString.isEmpty()?"":backString);
+        card.setFront(frontString);
+        card.setBack(backString);
         set.addCard(card);
         // app is buggy without these next lines
         helper = new DBHelper(getApplicationContext());
@@ -140,16 +141,11 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     @Override
     public void onPause() {
         super.onPause();
-        if (saved){
             if (helper == null)
                 helper = new DBHelper(getApplicationContext());
-            card.setFront(frontString.isEmpty()?"":frontString);
-            card.setBack(backString.isEmpty()?"":backString);
-            set.addCard(card);
             app = (Application) getApplication();
-            //TODO: helper.getAllCardSets()
             app.saveData(sets);
-        }
+
     }
 
     @Override
@@ -157,6 +153,9 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         super.onResume();
         sets = ((Application)getApplication()).getCardSets();
         set = sets.get(index);
+        card = set.get(cardPosition);
+        frontString = card.getFront();
+        backString = card.getBack();
     }
 
 }

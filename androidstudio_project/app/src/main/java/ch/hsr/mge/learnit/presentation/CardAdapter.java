@@ -35,10 +35,8 @@ public class CardAdapter extends
         }
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition(); // gets item position
-            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
-                Card card = set.get(position);
-                // We can access the data within the views
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
                 Intent intent = new Intent(context, AddCardActivity.class);
                 intent.putExtra("CARDSET_POSITION", index);
                 intent.putExtra("CARD_POSITION", position);

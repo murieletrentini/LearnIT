@@ -27,11 +27,10 @@ public class Application extends android.app.Application {
         sets.addCardSet(set);
     }
 
-    public void saveData(CardSets sets){
-        //helper.dropAndRecreate();
+    public void saveData(CardSets sets) {
         List<CardSet> setList = sets.getCardSetList();
         List<Card> cardList;
-        for (CardSet set : setList){
+        for (CardSet set : setList) {
             cardList = set.getCardList();
             if (!sets.getCardSetList().contains(set)) {
                 helper.insertCardSet(set.getTitle());
