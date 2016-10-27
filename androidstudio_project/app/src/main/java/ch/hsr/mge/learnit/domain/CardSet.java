@@ -3,15 +3,17 @@ package ch.hsr.mge.learnit.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CardSet {
 
     private List<Card> cardSet = new ArrayList<>();
     private String title;
-    private int id;
+    private String id;
 
     public CardSet(String title) {
         this.title = title;
+        id = UUID.randomUUID().toString();
 
     }
 

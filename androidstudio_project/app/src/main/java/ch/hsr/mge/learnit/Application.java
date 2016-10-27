@@ -30,14 +30,14 @@ public class Application extends android.app.Application {
     public void saveData(CardSets sets) {
         List<CardSet> setList = sets.getCardSetList();
         List<Card> cardList;
+        helper.deleteContent();
         for (CardSet set : setList) {
             cardList = set.getCardList();
-            if (!sets.getCardSetList().contains(set)) {
-                helper.insertCardSet(set.getTitle());
-                for (Card card : cardList) {
-                    helper.insertCard(card.getFront(), card.getBack(), set.getTitle());
-                }
+            helper.insertCardSet(set.getTitle());
+            for (Card card : cardList) {
+                helper.insertCard(card.getFront(), card.getBack(), set.getTitle());
             }
+
 
         }
 

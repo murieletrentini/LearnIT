@@ -146,11 +146,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return amountOfCards;
     }
 
-    public void dropAndRecreate() {
+    public void deleteContent() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE " + CARD_TABLE_NAME + " ;");
-        db.execSQL("DROP TABLE " + CARDSET_TABLE_NAME + " ;");
-        onCreate(db);
+        db.execSQL("DELETE FROM " + CARD_TABLE_NAME + " ;");
+        db.execSQL("DELETE FROM " + CARDSET_TABLE_NAME + " ;");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){}

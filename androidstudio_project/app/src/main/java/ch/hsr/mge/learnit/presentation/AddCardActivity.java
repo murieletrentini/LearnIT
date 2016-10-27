@@ -141,7 +141,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     @Override
     public void onPause() {
         super.onPause();
-            if (helper == null)
                 helper = new DBHelper(getApplicationContext());
             app = (Application) getApplication();
             app.saveData(sets);

@@ -64,7 +64,6 @@ public class PlayMode extends AppCompatActivity {
                 switcher.showNext();
             }
         });
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
