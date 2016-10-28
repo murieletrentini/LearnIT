@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.R;
-import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
@@ -18,7 +17,6 @@ public class CardSetAdapter extends
 
     private CardSets sets = null;
     private Context mContext;
-    private DBHelper helper;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textView;
@@ -46,14 +44,13 @@ public class CardSetAdapter extends
             }
         }
     }
-    //insert into db here?
+
     public CardSetAdapter(Context context, CardSets sets) {
         this.mContext = context;
         this.sets = sets;
     }
 
     @Override
-    //insert into db here?
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -87,9 +84,5 @@ public class CardSetAdapter extends
             return sets.getSize();
         else
             return 1;
-    }
-
-    private Context getContext() {
-        return mContext;
     }
 }

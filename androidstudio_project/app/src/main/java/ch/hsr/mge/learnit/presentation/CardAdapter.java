@@ -15,7 +15,7 @@ import ch.hsr.mge.learnit.domain.CardSet;
 public class CardAdapter extends
         RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
-    private CardSet set = null;
+    private CardSet set;
     private int index;
     private Context mContext;
 
@@ -68,7 +68,8 @@ public class CardAdapter extends
             holder.frontText.setText(card.getFront());
             holder.backText.setText(card.getBack());
         } else {
-            holder.frontText.setText("Click on the + to add cards");
+            String emptyString = "Click on the + to add cards";
+            holder.frontText.setText(emptyString);
         }
 
     }
@@ -79,9 +80,5 @@ public class CardAdapter extends
             return set.getSize();
         else
             return 0;
-    }
-
-    private Context getContext() {
-        return mContext;
     }
 }

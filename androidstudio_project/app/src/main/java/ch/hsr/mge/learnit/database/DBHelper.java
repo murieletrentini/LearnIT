@@ -5,32 +5,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
-import static android.database.DatabaseUtils.dumpCursorToString;
-import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_BACK;
-import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_CARDSETID;
-import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_FRONT;
-import static ch.hsr.mge.learnit.database.CardHelper.CARD_COLUMN_ID;
-import static ch.hsr.mge.learnit.database.CardHelper.CARD_TABLE_NAME;
-import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_ID;
-import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_NAME;
-import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_TABLE_NAME;
-
-//import static ch.hsr.mge.learnit.database.CardSetHelper.CARDSET_COLUMN_ID;
-
-/**
- * Created by nico on 21/10/16.
- */
-
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    //constants for Database names and rows
+    public static final String CARD_TABLE_NAME = "card";
+    public static final String CARD_COLUMN_ID = "cardid";
+    public static final String CARD_COLUMN_FRONT = "front";
+    public static final String CARD_COLUMN_BACK = "back";
+    public static final String CARD_COLUMN_CARDSETID= "cardsetid";
+    public static final String CARDSET_TABLE_NAME = "cardset";
+    public static final String CARDSET_COLUMN_ID= "cardsetid";
+    public static final String CARDSET_COLUMN_NAME = "cardsetname";
     public static final String DATABASE_NAME = "SQLiteDatabase.db";
+    private static final int DATABASE_VERSION = 1;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,30 +49,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateCardSet(String oldName, String newName) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(CARDSET_COLUMN_NAME, newName);
-        db.update(CARDSET_TABLE_NAME, values, CARDSET_COLUMN_NAME + "=?", new String[] { oldName });
-        return true;
-    }
-
-    public boolean updateCard(String[] oldStrings, String[] newStrings) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(CARD_COLUMN_FRONT, newStrings[0]);
-        db.update(CARD_TABLE_NAME, values, CARD_COLUMN_FRONT + "=?", new String[] { oldStrings[0] });
-        values = new ContentValues();
-        values.put(CARD_COLUMN_BACK, newStrings[1]);
-        db.update(CARD_TABLE_NAME, values, CARD_COLUMN_BACK + "=?", new String[] { oldStrings[1] });
-        return true;
-    }
-
     public CardSet getCardSet(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " +
                 CARDSET_TABLE_NAME + " WHERE " + CARDSET_COLUMN_ID + "=?", new String[] { id });
-        Log.d("1", dumpCursorToString(cursor));
         cursor.moveToFirst();
         CardSet set = new CardSet(cursor.getString(1));
         cursor = db.rawQuery( "SELECT * FROM " + CARD_TABLE_NAME+ " WHERE " +
@@ -93,12 +64,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 card.setBack(cursor.getString(2));
                 set.addCard(card);
                 cursor.moveToNext();
+                }
             }
-        }
         cursor.close();
         return set;
         }
-
 
     public CardSets getAllCardSets() {
         CardSets cardSets = new CardSets();
@@ -116,40 +86,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return cardSets;
     }
 
-    public void deleteCardSet(String name) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(CARDSET_TABLE_NAME, CARDSET_COLUMN_ID + " = ? ", new String[] { name });
-    }
-
     public boolean insertCard(String front, String back, String cardSetID) {
-        //SQLiteDatabase db = this.getReadableDatabase();
-        //Cursor cardSetCursor = db.rawQuery( "SELECT '" + CARDSET_COLUMN_ID + "' FROM " +
-        //        CARDSET_TABLE_NAME + " WHERE '" + CARDSET_COLUMN_NAME +
-        //        "' = ?", new String[] { cardSetName });
         SQLiteDatabase db = this.getWritableDatabase();
-        //cardSetCursor.moveToFirst();
-        //cardSetId = cardSetCursor.getInt(cardSetCursor.getColumnIndex(CardSetHelper.CARDSET_COLUMN_ID));
         ContentValues values =  new ContentValues();
-        //values.put(CARDSET_COLUMN_ID, ++cardIDCounter);
         values.put(CARD_COLUMN_FRONT, front);
         values.put(CARD_COLUMN_BACK, back);
         values.put(CARD_COLUMN_CARDSETID, cardSetID);
         db.insert(CARD_TABLE_NAME, null, values);
-        //cardSetCursor.close();
         return true;
-    }
-
-    public void deleteCard(Integer cardID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(CARD_TABLE_NAME, CARD_COLUMN_ID + " = ?", new String[] { Integer.toString(cardID) });
-    }
-    //select count(id) from  *
-    public int getAmountOfCards() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor numberCursor = db.rawQuery( "SELECT count(" + CARD_COLUMN_ID + ") as amount FROM " + CARD_TABLE_NAME, null);
-        Integer amountOfCards = numberCursor.getInt(numberCursor.getColumnIndex("amount"));
-        numberCursor.close();
-        return amountOfCards;
     }
 
     public void deleteContent() {

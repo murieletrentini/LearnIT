@@ -17,7 +17,6 @@ import android.widget.EditText;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
-import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
@@ -28,10 +27,7 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     private CardSet set;
     private int index;
     private Intent intent;
-    private DBHelper helper;
     private Application app;
-    private boolean titleChanged = false;
-    private String oldName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +52,11 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
         title.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                oldName = set.getTitle();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 set.setTitle(title.getText().toString());
-                titleChanged = true;
             }
 
             @Override

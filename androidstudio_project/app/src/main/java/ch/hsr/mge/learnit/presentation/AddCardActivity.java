@@ -3,7 +3,6 @@ package ch.hsr.mge.learnit.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
-import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.domain.Card;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
@@ -30,8 +28,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private Card card;
     private Intent intent;
     private Application app;
-    private DBHelper helper;
-    private String [] oldNames = new String[2];
 
 
     @Override
@@ -56,27 +52,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         front.setText(card.getFront());
         back.setText(card.getBack());
 
-        //oldNames[0] = front.getText().toString();
-        //oldNames[1] = back.getText().toString();
-
-       /* if (getIntent().hasExtra("CARD_POSITION")) {
-            //card already exists -> edit mode
-
-            card = set.get(extras.getInt("CARD_POSITION"));
-            front.setText(card.getFront());
-            back.setText(card.getBack());
-            //TODO: not exactly sure on how to check if card is a new one or an old one,
-            // code needs to be moved, maybe check on empty strings at start
-            //helper = new DBHelper(getApplicationContext());
-            //String newNames[] = new String[2];
-            //newNames[0] = front.getText().toString();
-            //newNames[1] = back.getText().toString();
-            //helper.updateCard(oldNames, newNames);
-
-
-        } else {
-            card = new Card();
-        }*/
     }
 
     @Override
@@ -122,11 +97,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         card.setFront(frontString);
         card.setBack(backString);
         set.addCard(card);
-        // app is buggy without these next lines
-        helper = new DBHelper(getApplicationContext());
-        helper.insertCardSet(set.getTitle(), set.getID());
-        helper.insertCard(frontString, backString, set.getTitle());
-
         intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
         intent.putExtra("CARDSET_POSITION", index);
         startActivity(intent);
@@ -141,9 +111,8 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     @Override
     public void onPause() {
         super.onPause();
-                helper = new DBHelper(getApplicationContext());
-            app = (Application) getApplication();
-            app.saveData(sets);
+        app = (Application) getApplication();
+        app.saveData(sets);
 
     }
 

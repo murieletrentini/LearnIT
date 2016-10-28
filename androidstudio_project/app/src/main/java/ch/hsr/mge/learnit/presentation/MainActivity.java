@@ -11,13 +11,11 @@ import android.view.View;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
-import ch.hsr.mge.learnit.database.DBHelper;
 import ch.hsr.mge.learnit.domain.CardSet;
 import ch.hsr.mge.learnit.domain.CardSets;
 
 public class MainActivity extends AppCompatActivity {
     private CardSets sets;
-    private DBHelper helper;
     private Application app;
 
 
