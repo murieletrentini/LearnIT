@@ -17,7 +17,7 @@ public class CardSet {
 
     }
 
-    public CardSet() { title = "placeholder"; }
+    public CardSet() { id = UUID.randomUUID().toString(); }
 
     public Card get(int position) {
         return cardSet.get(position);
@@ -30,6 +30,8 @@ public class CardSet {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getID() { return id; }
 
     public void addCard(Card card){
         if (!cardSet.contains(card)){

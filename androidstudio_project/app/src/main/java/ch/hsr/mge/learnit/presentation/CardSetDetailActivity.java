@@ -146,11 +146,13 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     public void onResume() {
         super.onResume();
         sets = app.getCardSets();
-        set = sets.get(index);
-        RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
-        CardAdapter adapter = new CardAdapter(this, set, index);
-        recyclerViewCardSets.setAdapter(adapter);
-        recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+        if (!sets.isEmpty()) {
+            set = sets.get(index);
+            RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
+            CardAdapter adapter = new CardAdapter(this, set, index);
+            recyclerViewCardSets.setAdapter(adapter);
+            recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 }
 

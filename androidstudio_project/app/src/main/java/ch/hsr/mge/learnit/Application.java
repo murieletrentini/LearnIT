@@ -33,9 +33,9 @@ public class Application extends android.app.Application {
         helper.deleteContent();
         for (CardSet set : setList) {
             cardList = set.getCardList();
-            helper.insertCardSet(set.getTitle());
+            helper.insertCardSet(set.getTitle(), set.getID());
             for (Card card : cardList) {
-                helper.insertCard(card.getFront(), card.getBack(), set.getTitle());
+                helper.insertCard(card.getFront(), card.getBack(), set.getID());
             }
 
 

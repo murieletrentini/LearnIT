@@ -124,7 +124,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         set.addCard(card);
         // app is buggy without these next lines
         helper = new DBHelper(getApplicationContext());
-        helper.insertCardSet(set.getTitle());
+        helper.insertCardSet(set.getTitle(), set.getID());
         helper.insertCard(frontString, backString, set.getTitle());
 
         intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
