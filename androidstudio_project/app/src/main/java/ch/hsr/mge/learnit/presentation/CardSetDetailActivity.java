@@ -56,7 +56,8 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                set.setTitle(title.getText().toString());
+                if (set != null)
+                    set.setTitle(title.getText().toString());
             }
 
             @Override
