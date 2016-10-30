@@ -10,14 +10,14 @@ import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
 import ch.hsr.mge.learnit.domain.CardSet;
 
-public class WellDoneActivity extends AppCompatActivity {
+public class FinishedActivity extends AppCompatActivity {
     private int index;
     private CardSet set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_well_done);
+        setContentView(R.layout.activity_finished);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
