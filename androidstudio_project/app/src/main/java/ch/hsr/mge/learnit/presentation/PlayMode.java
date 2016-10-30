@@ -58,16 +58,15 @@ public class PlayMode extends AppCompatActivity {
         switcher.setInAnimation(slide_in_left);
         switcher.setOutAnimation(slide_out_right);
 
-        front.setOnClickListener(new View.OnClickListener() {
+        switcher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switcher.showNext();
-            }
-        });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switcher.showPrevious();
+                if (switcher.getDisplayedChild() == 0){
+                    switcher.showNext();
+                } else {
+                    switcher.showPrevious();
+                }
+
             }
         });
 

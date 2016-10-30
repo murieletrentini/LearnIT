@@ -33,7 +33,7 @@ public class FinishedActivity extends AppCompatActivity {
         Application app = (Application) getApplication();
         set = app.getCardSets().get(index);
         String cardString = set.getSize() == 1? "card":"cards";
-        int percentage = set.amountCorrectCards()/set.getSize();
+        float percentage = (float)set.amountCorrectCards()/set.getSize();
         finished.setText(percentage>=0.5?"Well Done!!":"Keep at it!!");
         statistik.setText("You now have " + set.amountCorrectCards() + " of "+ set.getSize() +" correct " + cardString);
     }
