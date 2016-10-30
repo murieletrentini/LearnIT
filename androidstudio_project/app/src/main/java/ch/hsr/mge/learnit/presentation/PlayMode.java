@@ -103,7 +103,7 @@ public class PlayMode extends AppCompatActivity {
 }
 
     private void finished() {
-        Intent intent = new Intent(this, WellDoneActivity.class);
+        Intent intent = new Intent(this, FinishedActivity.class);
         intent.putExtra("CARDSET_POSITION", index);
         startActivity(intent);
     }

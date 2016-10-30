@@ -26,13 +26,15 @@ public class FinishedActivity extends AppCompatActivity {
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
-
+        TextView finished = (TextView) findViewById(R.id.doneText);
         TextView statistik = (TextView) findViewById(R.id.statistik);
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("CARDSET_POSITION");
         Application app = (Application) getApplication();
         set = app.getCardSets().get(index);
         String cardString = set.getSize() == 1? "card":"cards";
+        int percentage = set.amountCorrectCards()/set.getSize();
+        finished.setText(percentage>=0.5?"Well Done!!":"Keep at it!!");
         statistik.setText("You now have " + set.amountCorrectCards() + " of "+ set.getSize() +" correct " + cardString);
     }
 }
