@@ -2,10 +2,12 @@ package ch.hsr.mge.learnit.presentation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.R;
@@ -20,18 +22,19 @@ public class CardAdapter extends
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView frontText;
-        public TextView backText;
+        private TextView frontText;
+        private TextView backText;
+        private LinearLayout cardParent;
         private Context context;
 
-        public ViewHolder(Context context, View itemRoot, TextView frontText, TextView backText) {
+        public ViewHolder(Context context, View itemRoot, TextView frontText, TextView backText, LinearLayout cardParent) {
             super(itemRoot);
             this.frontText = frontText;
             this.backText = backText;
+            this.cardParent = cardParent;
             this.context = context;
 
-            frontText.setOnClickListener(this);
-            backText.setOnClickListener(this);
+            cardParent.setOnClickListener(this);
         }
         @Override
         public void onClick(View view) {
@@ -58,7 +61,8 @@ public class CardAdapter extends
         View v = layoutInflater.inflate(R.layout.card_layout, parent, false);
         TextView frontText = (TextView) v.findViewById(R.id.frontText);
         TextView backText = (TextView) v.findViewById(R.id.backText);
-        return new ViewHolder(context,v, frontText, backText);
+        LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.cardParent);
+        return new ViewHolder(context,v, frontText, backText, linearLayout);
     }
 
     @Override

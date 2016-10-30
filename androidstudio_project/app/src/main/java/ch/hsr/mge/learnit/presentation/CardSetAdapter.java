@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import ch.hsr.mge.learnit.R;
@@ -19,18 +20,19 @@ public class CardSetAdapter extends
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textView;
-        public TextView amountOfCards;
+        private TextView textView;
+        private TextView amountOfCards;
         private Context context;
+        private RelativeLayout cardSetParent;
 
-        public ViewHolder(Context context, View itemRoot, TextView textView, TextView amountOfCards) {
+        public ViewHolder(Context context, View itemRoot, TextView textView, TextView amountOfCards, RelativeLayout relativeLayout) {
             super(itemRoot);
             this.textView = textView;
             this.amountOfCards = amountOfCards;
             this.context = context;
+            this.cardSetParent = relativeLayout;
 
-            textView.setOnClickListener(this);
-            amountOfCards.setOnClickListener(this);
+           relativeLayout.setOnClickListener(this);
         }
 
         @Override
@@ -57,7 +59,8 @@ public class CardSetAdapter extends
         View v = layoutInflater.inflate(R.layout.card_set_layout, parent, false);
         TextView textView = (TextView) v.findViewById(R.id.textView);
         TextView amountOfCards = (TextView) v.findViewById(R.id.cardAmount);
-        return new ViewHolder(context, v, textView, amountOfCards);
+        RelativeLayout relativeLayout = (RelativeLayout) v.findViewById(R.id.cardSetParent);
+        return new ViewHolder(context, v, textView, amountOfCards, relativeLayout);
     }
 
 

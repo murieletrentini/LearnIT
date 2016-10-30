@@ -6,7 +6,8 @@
     android:minHeight="56dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:focusable="true" >
+    android:focusable="true"
+    android:id="@+id/cardParent">
     <TextView
         android:paddingRight="16dp"
         android:paddingLeft="16dp"
