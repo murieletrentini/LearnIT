@@ -67,14 +67,14 @@ public class CardAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        if (!set.isEmpty()){
+       // if (!set.isEmpty()){
             final Card card = set.get(position);
             holder.frontText.setText(card.getFront());
             holder.backText.setText(card.getBack());
-        } else {
+     /*   } else {
             String emptyString = "Click on the + to add cards";
             holder.frontText.setText(emptyString);
-        }
+        }*/
 
     }
 

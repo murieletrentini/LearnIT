@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
@@ -66,11 +67,19 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
         });
 
         RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardView);
+        LinearLayout emptyLayout = (LinearLayout) findViewById(R.id.empty);
 
-        CardAdapter adapter = new CardAdapter(this, set, index);
-        recyclerViewCardSets.setAdapter(adapter);
-        recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+        if (set.isEmpty()){
+            recyclerViewCardSets.setVisibility(View.GONE);
+            emptyLayout.setVisibility(View.VISIBLE);
+        } else {
+            recyclerViewCardSets.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.GONE);
 
+            CardAdapter adapter = new CardAdapter(this, set, index);
+            recyclerViewCardSets.setAdapter(adapter);
+            recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
