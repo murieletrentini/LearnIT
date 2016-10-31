@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,9 +38,8 @@ public class CardSetAdapter extends
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition(); // gets item position
-            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
-                // We can access the data within the views
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
                 Intent intent = new Intent(context, CardSetDetailActivity.class);
                 intent.putExtra("CARDSET_POSITION", position);
                 context.startActivity(intent);
@@ -66,18 +66,18 @@ public class CardSetAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        if (!sets.isEmpty()) {
+        //if (!sets.isEmpty()) {
             final CardSet set = sets.get(position);
             holder.textView.setText(set.getTitle());
             String card;
             card = set.getSize() == 1 ? "card" : "cards";
             holder.amountOfCards.setText("( " + set.getSize() + " " + card + " )");
-        }
+       /* }
         else {
             String emptyString = "Click on the Plus to add a Set!";
             holder.textView.setText(emptyString);
             holder.amountOfCards.setText("");
-        }
+        }*/
 
     }
 

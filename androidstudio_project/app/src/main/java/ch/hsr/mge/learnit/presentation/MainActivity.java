@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import ch.hsr.mge.learnit.Application;
 import ch.hsr.mge.learnit.R;
@@ -27,12 +28,22 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         RecyclerView recyclerViewCardSets = (RecyclerView) findViewById(R.id.cardSetView);
+        LinearLayout emptyLayout = (LinearLayout) findViewById(R.id.empty);
         app = (Application) getApplication();
 
         sets = app.getCardSets();
-        CardSetAdapter adapter = new CardSetAdapter(this, sets);
-        recyclerViewCardSets.setAdapter(adapter);
-        recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+
+        if (sets.isEmpty()){
+            recyclerViewCardSets.setVisibility(View.GONE);
+            emptyLayout.setVisibility(View.VISIBLE);
+        } else {
+            recyclerViewCardSets.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.GONE);
+
+            CardSetAdapter adapter = new CardSetAdapter(this, sets);
+            recyclerViewCardSets.setAdapter(adapter);
+            recyclerViewCardSets.setLayoutManager(new LinearLayoutManager(this));
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
