@@ -96,7 +96,6 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_cardsetdetail, menu);
         return true;
     }
@@ -125,8 +124,6 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
                 alert.show(getSupportFragmentManager(), "Alert");
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
     }

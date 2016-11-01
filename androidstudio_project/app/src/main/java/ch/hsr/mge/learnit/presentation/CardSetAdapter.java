@@ -66,19 +66,11 @@ public class CardSetAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        //if (!sets.isEmpty()) {
             final CardSet set = sets.get(position);
             holder.textView.setText(set.getTitle());
             String card;
             card = set.getSize() == 1 ? "card" : "cards";
             holder.amountOfCards.setText("( " + set.getSize() + " " + card + " )");
-       /* }
-        else {
-            String emptyString = "Click on the Plus to add a Set!";
-            holder.textView.setText(emptyString);
-            holder.amountOfCards.setText("");
-        }*/
-
     }
 
     @Override

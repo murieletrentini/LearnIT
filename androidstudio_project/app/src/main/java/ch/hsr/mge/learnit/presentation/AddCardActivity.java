@@ -26,9 +26,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     private String backString;
     private EditText back;
     private Card card;
-    private Intent intent;
-    private Application app;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +39,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("CARDSET_POSITION");
         cardPosition = extras.getInt("CARD_POSITION");
-        sets= app.getCardSets();
+        sets = app.getCardSets();
         set = sets.get(index);
         card = set.get(cardPosition);
 
@@ -56,7 +53,6 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_addcard, menu);
         return true;
     }
@@ -67,7 +63,7 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
             case R.id.action_save:
                 frontString = front.getText().toString();
                 backString = back.getText().toString();
-                if(frontString.equals("") || backString.equals("")) {
+                if (frontString.equals("") || backString.equals("")) {
                     DialogFragment alert = new YesNoDialog();
                     Bundle args = new Bundle();
                     args.putString("MESSAGE", "Your card has unfilled sides.");
@@ -87,39 +83,37 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
                 startActivity(intent);
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void saveAndBackToParentActivity(){
+    private void saveAndBackToParentActivity() {
         card.setFront(frontString);
         card.setBack(backString);
         set.addCard(card);
-        intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
+        Intent intent = new Intent(AddCardActivity.this, CardSetDetailActivity.class);
         intent.putExtra("CARDSET_POSITION", index);
         startActivity(intent);
     }
 
     @Override
     public void onFinishDialog(int resultCode) {
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             saveAndBackToParentActivity();
         }
     }
+
     @Override
     public void onPause() {
         super.onPause();
-        app = (Application) getApplication();
-        app.saveData(sets);
+        ((Application) getApplication()).saveData(sets);
 
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        sets = ((Application)getApplication()).getCardSets();
+        sets = ((Application) getApplication()).getCardSets();
         set = sets.get(index);
         card = set.get(cardPosition);
         frontString = card.getFront();
