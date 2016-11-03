@@ -61,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed(){
+       onPause();
+    }
+
+    @Override
     public void onPause(){
         super.onPause();
         app.saveData(sets);

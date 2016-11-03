@@ -61,7 +61,7 @@ public class PlayMode extends AppCompatActivity {
         switcher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (switcher.getDisplayedChild() == 0){
+                if (switcher.getDisplayedChild() == 0) {
                     switcher.showNext();
                 } else {
                     switcher.showPrevious();
@@ -86,20 +86,27 @@ public class PlayMode extends AppCompatActivity {
         });
 
         thumbsDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currCard.setCorrect(false);
-                if (counter == set.getSize() - 1) {
-                    finished();
-                } else {
-                    currCard = set.get(++counter);
-                    refreshCardText();
-                }
-        }
+                                          @Override
+                                          public void onClick(View view) {
+                                              currCard.setCorrect(false);
+                                              if (counter == set.getSize() - 1) {
+                                                  finished();
+                                              } else {
+                                                  currCard = set.get(++counter);
+                                                  refreshCardText();
+                                              }
+                                          }
+                                      }
+
+        );
     }
 
-    );
-}
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, CardSetDetailActivity.class);
+        intent.putExtra("CARDSET_POSITION", index);
+        startActivity(intent);
+    }
 
     private void finished() {
         Intent intent = new Intent(this, FinishedActivity.class);
@@ -108,7 +115,7 @@ public class PlayMode extends AppCompatActivity {
     }
 
     private void refreshCardText() {
-        if (switcher == null || switcher.getDisplayedChild() == 0){
+        if (switcher == null || switcher.getDisplayedChild() == 0) {
             front.setText(currCard.getFront());
             back.setText(currCard.getBack());
         } else {

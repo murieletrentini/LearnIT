@@ -95,6 +95,11 @@ public class CardSetDetailActivity extends AppCompatActivity implements DialogLi
     }
 
     @Override
+    public void onBackPressed(){
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_cardsetdetail, menu);
         return true;

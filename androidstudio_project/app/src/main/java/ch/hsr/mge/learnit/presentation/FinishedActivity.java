@@ -1,5 +1,6 @@
 package ch.hsr.mge.learnit.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -37,4 +38,12 @@ public class FinishedActivity extends AppCompatActivity {
         finished.setText(percentage>=0.5?"Well Done!!":"Keep at it!!");
         statistik.setText("You now have " + set.amountCorrectCards() + " of "+ set.getSize() +" correct " + cardString);
     }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, CardSetDetailActivity.class);
+        intent.putExtra("CARDSET_POSITION", index);
+        startActivity(intent);
+    }
+
 }

@@ -100,6 +100,16 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
     }
 
     @Override
+    public void onBackPressed(){
+        if (frontString.equals("") && backString.equals("")) {
+            set.removeCard(card);
+        }
+        Intent intent = new Intent(this, CardSetDetailActivity.class);
+        intent.putExtra("CARDSET_POSITION", index);
+        startActivity(intent);
+    }
+
+    @Override
     public void onFinishDialog(int resultCode) {
         if (resultCode == RESULT_OK) {
             saveAndBackToParentActivity();
