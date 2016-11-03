@@ -74,6 +74,9 @@ public class AddCardActivity extends AppCompatActivity implements DialogListener
                 }
                 return true;
             case R.id.action_goHome:
+                if (frontString.equals("") && backString.equals("")) {
+                    set.removeCard(card);
+                }
                 startActivity(new Intent(AddCardActivity.this, MainActivity.class));
                 return true;
             case R.id.action_removeCard:
